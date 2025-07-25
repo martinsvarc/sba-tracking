@@ -62,17 +62,39 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4">
-      <div className="max-w-7xl mx-auto">
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #111827 0%, #1f2937 50%, #111827 100%)',
+      padding: '1rem',
+      fontFamily: 'system-ui, -apple-system, sans-serif'
+    }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <h1 style={{
+            fontSize: '2.5rem',
+            fontWeight: 'bold',
+            background: 'linear-gradient(135deg, #a855f7, #ec4899)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            marginBottom: '0.5rem'
+          }}>
             Questionnaire Review
           </h1>
-          <p className="text-gray-400 text-lg">Review applicant information and update status</p>
+          <p style={{ color: '#9ca3af', fontSize: '1.125rem' }}>
+            Review applicant information and update status
+          </p>
           {data.status && (
-            <div className="mt-4">
-              <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold bg-blue-500 text-white">
+            <div style={{ marginTop: '1rem' }}>
+              <span style={{
+                display: 'inline-block',
+                padding: '0.5rem 1rem',
+                borderRadius: '9999px',
+                fontSize: '0.875rem',
+                fontWeight: '600',
+                backgroundColor: '#3b82f6',
+                color: 'white'
+              }}>
                 Current Status: {data.status}
               </span>
             </div>
@@ -81,118 +103,234 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
 
         {/* Success Toast */}
         {showSuccess && (
-          <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+          <div style={{
+            position: 'fixed',
+            top: '1rem',
+            right: '1rem',
+            backgroundColor: '#10b981',
+            color: 'white',
+            padding: '0.75rem 1.5rem',
+            borderRadius: '0.5rem',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+            zIndex: 50
+          }}>
             {successMessage}
           </div>
         )}
 
         {/* Main Content - 3 Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+          gap: '2rem',
+          marginBottom: '2rem'
+        }}>
           {/* Column 1: Personal Information */}
-          <div className="space-y-6">
-            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 shadow-lg">
-              <h2 className="text-xl font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-4">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div style={{
+              backgroundColor: 'rgba(31, 41, 55, 0.5)',
+              borderRadius: '0.75rem',
+              padding: '1.5rem',
+              border: '1px solid #374151',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+            }}>
+              <h2 style={{
+                fontSize: '1.25rem',
+                fontWeight: '600',
+                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                marginBottom: '1rem'
+              }}>
                 Personal Information
               </h2>
-              <div className="space-y-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium block mb-1">Name</label>
-                  <p className="text-white font-semibold text-lg">{data.name}</p>
+                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Name</label>
+                  <p style={{ color: 'white', fontWeight: '600', fontSize: '1.125rem' }}>{data.name}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium block mb-1">Email</label>
-                  <p className="text-white font-semibold break-all">{data.email}</p>
+                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Email</label>
+                  <p style={{ color: 'white', fontWeight: '600', wordBreak: 'break-all' }}>{data.email}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium block mb-1">Phone</label>
-                  <p className="text-white font-semibold">{data.phone}</p>
+                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Phone</label>
+                  <p style={{ color: 'white', fontWeight: '600' }}>{data.phone}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium block mb-1">Event ID</label>
-                  <p className="text-white font-semibold text-xs break-all leading-tight">{data.event_id}</p>
+                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Event ID</label>
+                  <p style={{ color: 'white', fontWeight: '600', fontSize: '0.75rem', wordBreak: 'break-all', lineHeight: '1.2' }}>{data.event_id}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 shadow-lg">
-              <h2 className="text-xl font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-4">
+            <div style={{
+              backgroundColor: 'rgba(31, 41, 55, 0.5)',
+              borderRadius: '0.75rem',
+              padding: '1.5rem',
+              border: '1px solid #374151',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+            }}>
+              <h2 style={{
+                fontSize: '1.25rem',
+                fontWeight: '600',
+                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                marginBottom: '1rem'
+              }}>
                 Business Goals
               </h2>
-              <div className="space-y-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium block mb-1">Entrepreneur at Heart</label>
-                  <p className="text-white font-semibold">{data.entrepreneurAtHeart}</p>
+                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Entrepreneur at Heart</label>
+                  <p style={{ color: 'white', fontWeight: '600' }}>{data.entrepreneurAtHeart}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium block mb-1">Goal with Launching</label>
-                  <p className="text-white leading-relaxed">{data.goalWithLaunching}</p>
+                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Goal with Launching</label>
+                  <p style={{ color: 'white', lineHeight: '1.6' }}>{data.goalWithLaunching}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium block mb-1">Interest in Solar Business</label>
-                  <p className="text-white leading-relaxed">{data.interestInSolarBusiness}</p>
+                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Interest in Solar Business</label>
+                  <p style={{ color: 'white', lineHeight: '1.6' }}>{data.interestInSolarBusiness}</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Column 2: Financial & Commitment */}
-          <div className="space-y-6">
-            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 shadow-lg">
-              <h2 className="text-xl font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-4">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div style={{
+              backgroundColor: 'rgba(31, 41, 55, 0.5)',
+              borderRadius: '0.75rem',
+              padding: '1.5rem',
+              border: '1px solid #374151',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+            }}>
+              <h2 style={{
+                fontSize: '1.25rem',
+                fontWeight: '600',
+                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                marginBottom: '1rem'
+              }}>
                 Financial Information
               </h2>
-              <div className="space-y-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium block mb-1">Desired Monthly Revenue</label>
-                  <p className="text-green-400 font-semibold text-xl">{data.desiredMonthlyRevenue}</p>
+                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Desired Monthly Revenue</label>
+                  <p style={{ color: '#4ade80', fontWeight: '600', fontSize: '1.25rem' }}>{data.desiredMonthlyRevenue}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium block mb-1">Current Monthly Income</label>
-                  <p className="text-white font-semibold">{data.currentMonthlyIncome}</p>
+                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Current Monthly Income</label>
+                  <p style={{ color: 'white', fontWeight: '600' }}>{data.currentMonthlyIncome}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium block mb-1">Investment Willingness</label>
-                  <p className="text-white leading-relaxed">{data.investmentWillingness}</p>
+                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Investment Willingness</label>
+                  <p style={{ color: 'white', lineHeight: '1.6' }}>{data.investmentWillingness}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 shadow-lg">
-              <h2 className="text-xl font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-4">
+            <div style={{
+              backgroundColor: 'rgba(31, 41, 55, 0.5)',
+              borderRadius: '0.75rem',
+              padding: '1.5rem',
+              border: '1px solid #374151',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+            }}>
+              <h2 style={{
+                fontSize: '1.25rem',
+                fontWeight: '600',
+                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                marginBottom: '1rem'
+              }}>
                 Commitment & Motivation
               </h2>
-              <div className="space-y-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium block mb-1">Strategy Call Commitment</label>
-                  <p className="text-white leading-relaxed">{data.strategyCallCommitment}</p>
+                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Strategy Call Commitment</label>
+                  <p style={{ color: 'white', lineHeight: '1.6' }}>{data.strategyCallCommitment}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium block mb-1">Priority Reason</label>
-                  <p className="text-white leading-relaxed">{data.priorityReason}</p>
+                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Priority Reason</label>
+                  <p style={{ color: 'white', lineHeight: '1.6' }}>{data.priorityReason}</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Column 3: Help Needed & Actions */}
-          <div className="space-y-6">
-            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 shadow-lg">
-              <h2 className="text-xl font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-4">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div style={{
+              backgroundColor: 'rgba(31, 41, 55, 0.5)',
+              borderRadius: '0.75rem',
+              padding: '1.5rem',
+              border: '1px solid #374151',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+            }}>
+              <h2 style={{
+                fontSize: '1.25rem',
+                fontWeight: '600',
+                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                marginBottom: '1rem'
+              }}>
                 Help Needed Most
               </h2>
-              <p className="text-white leading-relaxed">{data.helpNeededMost}</p>
+              <p style={{ color: 'white', lineHeight: '1.6' }}>{data.helpNeededMost}</p>
             </div>
 
             {/* Action Buttons */}
-            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 shadow-lg">
-              <h2 className="text-xl font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-6 text-center">
+            <div style={{
+              backgroundColor: 'rgba(31, 41, 55, 0.5)',
+              borderRadius: '0.75rem',
+              padding: '1.5rem',
+              border: '1px solid #374151',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+            }}>
+              <h2 style={{
+                fontSize: '1.25rem',
+                fontWeight: '600',
+                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                marginBottom: '1.5rem',
+                textAlign: 'center'
+              }}>
                 Update Status
               </h2>
-              <div className="space-y-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <button
                   onClick={() => handleStatusUpdate('Qualified Show-Up')}
                   disabled={isLoading}
-                  className="w-full px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+                  style={{
+                    width: '100%',
+                    padding: '1rem 1.5rem',
+                    background: 'linear-gradient(135deg, #10b981, #059669)',
+                    color: 'white',
+                    fontWeight: '600',
+                    borderRadius: '0.75rem',
+                    border: 'none',
+                    cursor: isLoading ? 'not-allowed' : 'pointer',
+                    opacity: isLoading ? 0.5 : 1,
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isLoading) {
+                      e.currentTarget.style.transform = 'scale(1.02)';
+                      e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                  }}
                 >
                   {isLoading ? 'Updating...' : 'Qualified Show-Up'}
                 </button>
@@ -200,7 +338,29 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                 <button
                   onClick={() => handleStatusUpdate('No Show')}
                   disabled={isLoading}
-                  className="w-full px-6 py-4 bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+                  style={{
+                    width: '100%',
+                    padding: '1rem 1.5rem',
+                    background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                    color: 'white',
+                    fontWeight: '600',
+                    borderRadius: '0.75rem',
+                    border: 'none',
+                    cursor: isLoading ? 'not-allowed' : 'pointer',
+                    opacity: isLoading ? 0.5 : 1,
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isLoading) {
+                      e.currentTarget.style.transform = 'scale(1.02)';
+                      e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                  }}
                 >
                   {isLoading ? 'Updating...' : 'No Show'}
                 </button>
@@ -208,7 +368,29 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                 <button
                   onClick={() => handleStatusUpdate('Disqualified')}
                   disabled={isLoading}
-                  className="w-full px-6 py-4 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+                  style={{
+                    width: '100%',
+                    padding: '1rem 1.5rem',
+                    background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                    color: 'white',
+                    fontWeight: '600',
+                    borderRadius: '0.75rem',
+                    border: 'none',
+                    cursor: isLoading ? 'not-allowed' : 'pointer',
+                    opacity: isLoading ? 0.5 : 1,
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isLoading) {
+                      e.currentTarget.style.transform = 'scale(1.02)';
+                      e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                  }}
                 >
                   {isLoading ? 'Updating...' : 'Disqualified'}
                 </button>
