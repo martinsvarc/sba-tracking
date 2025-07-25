@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Questionnaire {
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  name            String
+  email           String
+  phone           String
+  eventId         String   @unique
+  entrepreneurAtHeart  String
+  goalWithLaunching     String
+  interestInSolarBusiness String
+  desiredMonthlyRevenue String
+  helpNeededMost        String
+  currentMonthlyIncome  String
+  priorityReason        String
+  investmentWillingness String
+  strategyCallCommitment String
+  status          String?
+} 

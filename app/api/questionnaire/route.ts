@@ -1,0 +1,69 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+    
+    // Validate required fields
+    const requiredFields = [
+      'name', 'email', 'phone', 'eventId', 'entrepreneurAtHeart',
+      'goalWithLaunching', 'interestInSolarBusiness', 'desiredMonthlyRevenue',
+      'helpNeededMost', 'currentMonthlyIncome', 'priorityReason',
+      'investmentWillingness', 'strategyCallCommitment'
+    ]
+    
+    for (const field of requiredFields) {
+      if (!body[field]) {
+        return NextResponse.json(
+          { error: `Missing required field: ${field}` },
+          { status: 400 }
+        )
+      }
+    }
+
+    // Create questionnaire in database
+    const questionnaire = await prisma.questionnaire.create({
+      data: {
+        name: body.name,
+        email: body.email,
+        phone: body.phone,
+        eventId: body.eventId,
+        entrepreneurAtHeart: body.entrepreneurAtHeart,
+        goalWithLaunching: body.goalWithLaunching,
+        interestInSolarBusiness: body.interestInSolarBusiness,
+        desiredMonthlyRevenue: body.desiredMonthlyRevenue,
+        helpNeededMost: body.helpNeededMost,
+        currentMonthlyIncome: body.currentMonthlyIncome,
+        priorityReason: body.priorityReason,
+        investmentWillingness: body.investmentWillingness,
+        strategyCallCommitment: body.strategyCallCommitment,
+      }
+    })
+
+    // Return the review URL
+    const reviewUrl = `/review/${questionnaire.id}`
+    
+    return NextResponse.json({
+      success: true,
+      id: questionnaire.id,
+      reviewUrl,
+      message: 'Questionnaire created successfully'
+    })
+
+  } catch (error) {
+    console.error('Error creating questionnaire:', error)
+    
+    if (error instanceof Error && error.message.includes('Unique constraint')) {
+      return NextResponse.json(
+        { error: 'A questionnaire with this event ID already exists' },
+        { status: 409 }
+      )
+    }
+    
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
+} 
