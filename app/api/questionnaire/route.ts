@@ -22,6 +22,17 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Test database connection
+    try {
+      await prisma.$connect()
+    } catch (dbError) {
+      console.error('Database connection failed:', dbError)
+      return NextResponse.json(
+        { error: 'Database connection failed' },
+        { status: 503 }
+      )
+    }
+
     // Create questionnaire in database
     const questionnaire = await prisma.questionnaire.create({
       data: {

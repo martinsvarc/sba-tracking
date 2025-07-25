@@ -10,6 +10,9 @@ interface ReviewPageProps {
 
 async function getQuestionnaire(id: string) {
   try {
+    // Test database connection
+    await prisma.$connect()
+    
     const questionnaire = await prisma.questionnaire.findUnique({
       where: { id }
     })
