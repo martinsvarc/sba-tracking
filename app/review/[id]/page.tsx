@@ -57,9 +57,5 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
     status: questionnaire.status
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      <QuestionnaireCard data={data} />
-    </div>
-  )
+  return <QuestionnaireCard data={data} />
 } 

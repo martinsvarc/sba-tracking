@@ -62,7 +62,7 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
   }
 
   const getStatusButtonClass = (status: string) => {
-    const baseClasses = "px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
+    const baseClasses = "px-6 py-3 rounded-xl font-semibold text-base transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
     
     switch (status) {
       case 'Qualified Show-Up':
@@ -77,17 +77,17 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
   }
 
   return (
-    <div className="h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4 overflow-hidden">
-      <div className="glow-card w-full max-w-7xl h-full max-h-screen p-6 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4">
+      <div className="max-w-7xl mx-auto h-full">
         {/* Header */}
-        <div className="text-center mb-4">
-          <h1 className="text-2xl font-bold text-gradient-primary mb-1">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold text-gradient-primary mb-2">
             Questionnaire Review
           </h1>
-          <p className="text-gray-400 text-sm">Review applicant information and update status</p>
+          <p className="text-gray-400">Review applicant information and update status</p>
           {data.status && (
-            <div className="mt-2">
-              <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-blue-500 text-white">
+            <div className="mt-3">
+              <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold bg-blue-500 text-white">
                 Current Status: {data.status}
               </span>
             </div>
@@ -96,111 +96,106 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
 
         {/* Success Toast */}
         {showSuccess && (
-          <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
+          <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
             {successMessage}
           </div>
         )}
 
-        {/* Main Content - Horizontal Layout */}
-        <div className="flex-1 flex gap-4 mb-4 overflow-hidden">
-          {/* Left Column - Personal & Business Info */}
-          <div className="flex-1 space-y-4">
-            {/* Personal Information */}
-            <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-              <h2 className="text-lg font-semibold text-gradient-gold mb-3">Personal Information</h2>
-              <div className="space-y-2 text-sm">
+        {/* Main Content - 3 Column Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          {/* Column 1: Personal Information */}
+          <div className="space-y-6">
+            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
+              <h2 className="text-xl font-semibold text-gradient-gold mb-4">Personal Information</h2>
+              <div className="space-y-3">
                 <div>
-                  <label className="text-xs text-gray-400 font-medium">Name</label>
-                  <p className="text-white font-semibold text-xs">{data.name}</p>
+                  <label className="text-sm text-gray-400 font-medium">Name</label>
+                  <p className="text-white font-semibold">{data.name}</p>
                 </div>
                 <div>
-                  <label className="text-xs text-gray-400 font-medium">Email</label>
-                  <p className="text-white font-semibold text-xs truncate">{data.email}</p>
+                  <label className="text-sm text-gray-400 font-medium">Email</label>
+                  <p className="text-white font-semibold break-all">{data.email}</p>
                 </div>
                 <div>
-                  <label className="text-xs text-gray-400 font-medium">Phone</label>
-                  <p className="text-white font-semibold text-xs">{data.phone}</p>
+                  <label className="text-sm text-gray-400 font-medium">Phone</label>
+                  <p className="text-white font-semibold">{data.phone}</p>
                 </div>
                 <div>
-                  <label className="text-xs text-gray-400 font-medium">Event ID</label>
+                  <label className="text-sm text-gray-400 font-medium">Event ID</label>
                   <p className="text-white font-semibold text-xs break-all leading-tight">{data.event_id}</p>
                 </div>
               </div>
             </div>
 
-            {/* Business Goals */}
-            <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-              <h2 className="text-lg font-semibold text-gradient-gold mb-3">Business Goals</h2>
-              <div className="space-y-2 text-sm">
+            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
+              <h2 className="text-xl font-semibold text-gradient-gold mb-4">Business Goals</h2>
+              <div className="space-y-3">
                 <div>
-                  <label className="text-xs text-gray-400 font-medium">Entrepreneur at Heart</label>
-                  <p className="text-white font-semibold text-xs">{data.entrepreneurAtHeart}</p>
+                  <label className="text-sm text-gray-400 font-medium">Entrepreneur at Heart</label>
+                  <p className="text-white font-semibold">{data.entrepreneurAtHeart}</p>
                 </div>
                 <div>
-                  <label className="text-xs text-gray-400 font-medium">Goal with Launching</label>
-                  <p className="text-white text-xs leading-tight">{data.goalWithLaunching}</p>
+                  <label className="text-sm text-gray-400 font-medium">Goal with Launching</label>
+                  <p className="text-white leading-relaxed">{data.goalWithLaunching}</p>
                 </div>
                 <div>
-                  <label className="text-xs text-gray-400 font-medium">Interest in Solar Business</label>
-                  <p className="text-white text-xs leading-tight">{data.interestInSolarBusiness}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Middle Column - Financial & Commitment */}
-          <div className="flex-1 space-y-4">
-            {/* Financial Information */}
-            <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-              <h2 className="text-lg font-semibold text-gradient-gold mb-3">Financial Information</h2>
-              <div className="space-y-2 text-sm">
-                <div>
-                  <label className="text-xs text-gray-400 font-medium">Desired Monthly Revenue</label>
-                  <p className="text-white font-semibold text-green-400 text-xs">{data.desiredMonthlyRevenue}</p>
-                </div>
-                <div>
-                  <label className="text-xs text-gray-400 font-medium">Current Monthly Income</label>
-                  <p className="text-white font-semibold text-xs">{data.currentMonthlyIncome}</p>
-                </div>
-                <div>
-                  <label className="text-xs text-gray-400 font-medium">Investment Willingness</label>
-                  <p className="text-white font-semibold text-xs leading-tight">{data.investmentWillingness}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Commitment & Motivation */}
-            <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-              <h2 className="text-lg font-semibold text-gradient-gold mb-3">Commitment & Motivation</h2>
-              <div className="space-y-2 text-sm">
-                <div>
-                  <label className="text-xs text-gray-400 font-medium">Strategy Call Commitment</label>
-                  <p className="text-white font-semibold text-xs leading-tight">{data.strategyCallCommitment}</p>
-                </div>
-                <div>
-                  <label className="text-xs text-gray-400 font-medium">Priority Reason</label>
-                  <p className="text-white text-xs leading-tight">{data.priorityReason}</p>
+                  <label className="text-sm text-gray-400 font-medium">Interest in Solar Business</label>
+                  <p className="text-white leading-relaxed">{data.interestInSolarBusiness}</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column - Help Needed & Actions */}
-          <div className="flex-1 space-y-4">
-            {/* Help Needed Section */}
-            <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-              <h2 className="text-lg font-semibold text-gradient-gold mb-3">Help Needed Most</h2>
-              <p className="text-white text-xs leading-tight">{data.helpNeededMost}</p>
+          {/* Column 2: Financial & Commitment */}
+          <div className="space-y-6">
+            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
+              <h2 className="text-xl font-semibold text-gradient-gold mb-4">Financial Information</h2>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-sm text-gray-400 font-medium">Desired Monthly Revenue</label>
+                  <p className="text-green-400 font-semibold text-lg">{data.desiredMonthlyRevenue}</p>
+                </div>
+                <div>
+                  <label className="text-sm text-gray-400 font-medium">Current Monthly Income</label>
+                  <p className="text-white font-semibold">{data.currentMonthlyIncome}</p>
+                </div>
+                <div>
+                  <label className="text-sm text-gray-400 font-medium">Investment Willingness</label>
+                  <p className="text-white leading-relaxed">{data.investmentWillingness}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
+              <h2 className="text-xl font-semibold text-gradient-gold mb-4">Commitment & Motivation</h2>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-sm text-gray-400 font-medium">Strategy Call Commitment</label>
+                  <p className="text-white leading-relaxed">{data.strategyCallCommitment}</p>
+                </div>
+                <div>
+                  <label className="text-sm text-gray-400 font-medium">Priority Reason</label>
+                  <p className="text-white leading-relaxed">{data.priorityReason}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Column 3: Help Needed & Actions */}
+          <div className="space-y-6">
+            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
+              <h2 className="text-xl font-semibold text-gradient-gold mb-4">Help Needed Most</h2>
+              <p className="text-white leading-relaxed">{data.helpNeededMost}</p>
             </div>
 
             {/* Action Buttons */}
-            <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 flex flex-col justify-center">
-              <h2 className="text-lg font-semibold text-gradient-gold mb-4 text-center">Update Status</h2>
-              <div className="space-y-2">
+            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
+              <h2 className="text-xl font-semibold text-gradient-gold mb-4 text-center">Update Status</h2>
+              <div className="space-y-3">
                 <button
                   onClick={() => handleStatusUpdate('Qualified Show-Up')}
                   disabled={isLoading}
-                  className={getStatusButtonClass('Qualified Show-Up') + " w-full text-xs py-2"}
+                  className={getStatusButtonClass('Qualified Show-Up') + " w-full"}
                 >
                   {isLoading ? 'Updating...' : 'Qualified Show-Up'}
                 </button>
@@ -208,7 +203,7 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                 <button
                   onClick={() => handleStatusUpdate('No Show')}
                   disabled={isLoading}
-                  className={getStatusButtonClass('No Show') + " w-full text-xs py-2"}
+                  className={getStatusButtonClass('No Show') + " w-full"}
                 >
                   {isLoading ? 'Updating...' : 'No Show'}
                 </button>
@@ -216,7 +211,7 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                 <button
                   onClick={() => handleStatusUpdate('Disqualified')}
                   disabled={isLoading}
-                  className={getStatusButtonClass('Disqualified') + " w-full text-xs py-2"}
+                  className={getStatusButtonClass('Disqualified') + " w-full"}
                 >
                   {isLoading ? 'Updating...' : 'Disqualified'}
                 </button>
