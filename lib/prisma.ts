@@ -17,12 +17,6 @@ function createPrismaClient() {
         url: process.env.DATABASE_URL,
       },
     },
-    // Explicitly disable Data Proxy
-    __internal: {
-      engine: {
-        binaryPath: undefined,
-      },
-    },
   })
 }
 
