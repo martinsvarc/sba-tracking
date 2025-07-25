@@ -61,32 +61,17 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
     }
   }
 
-  const getStatusButtonClass = (status: string) => {
-    const baseClasses = "px-6 py-3 rounded-xl font-semibold text-base transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
-    
-    switch (status) {
-      case 'Qualified Show-Up':
-        return `${baseClasses} bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white focus:ring-green-500 shadow-lg hover:shadow-xl`
-      case 'No Show':
-        return `${baseClasses} bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white focus:ring-yellow-500 shadow-lg hover:shadow-xl`
-      case 'Disqualified':
-        return `${baseClasses} bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white focus:ring-red-500 shadow-lg hover:shadow-xl`
-      default:
-        return baseClasses
-    }
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4">
-      <div className="max-w-7xl mx-auto h-full">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-gradient-primary mb-2">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
             Questionnaire Review
           </h1>
-          <p className="text-gray-400">Review applicant information and update status</p>
+          <p className="text-gray-400 text-lg">Review applicant information and update status</p>
           {data.status && (
-            <div className="mt-3">
+            <div className="mt-4">
               <span className="inline-block px-4 py-2 rounded-full text-sm font-semibold bg-blue-500 text-white">
                 Current Status: {data.status}
               </span>
@@ -102,44 +87,48 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
         )}
 
         {/* Main Content - 3 Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Column 1: Personal Information */}
           <div className="space-y-6">
-            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-              <h2 className="text-xl font-semibold text-gradient-gold mb-4">Personal Information</h2>
-              <div className="space-y-3">
+            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 shadow-lg">
+              <h2 className="text-xl font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-4">
+                Personal Information
+              </h2>
+              <div className="space-y-4">
                 <div>
-                  <label className="text-sm text-gray-400 font-medium">Name</label>
-                  <p className="text-white font-semibold">{data.name}</p>
+                  <label className="text-sm text-gray-400 font-medium block mb-1">Name</label>
+                  <p className="text-white font-semibold text-lg">{data.name}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium">Email</label>
+                  <label className="text-sm text-gray-400 font-medium block mb-1">Email</label>
                   <p className="text-white font-semibold break-all">{data.email}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium">Phone</label>
+                  <label className="text-sm text-gray-400 font-medium block mb-1">Phone</label>
                   <p className="text-white font-semibold">{data.phone}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium">Event ID</label>
+                  <label className="text-sm text-gray-400 font-medium block mb-1">Event ID</label>
                   <p className="text-white font-semibold text-xs break-all leading-tight">{data.event_id}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-              <h2 className="text-xl font-semibold text-gradient-gold mb-4">Business Goals</h2>
-              <div className="space-y-3">
+            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 shadow-lg">
+              <h2 className="text-xl font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-4">
+                Business Goals
+              </h2>
+              <div className="space-y-4">
                 <div>
-                  <label className="text-sm text-gray-400 font-medium">Entrepreneur at Heart</label>
+                  <label className="text-sm text-gray-400 font-medium block mb-1">Entrepreneur at Heart</label>
                   <p className="text-white font-semibold">{data.entrepreneurAtHeart}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium">Goal with Launching</label>
+                  <label className="text-sm text-gray-400 font-medium block mb-1">Goal with Launching</label>
                   <p className="text-white leading-relaxed">{data.goalWithLaunching}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium">Interest in Solar Business</label>
+                  <label className="text-sm text-gray-400 font-medium block mb-1">Interest in Solar Business</label>
                   <p className="text-white leading-relaxed">{data.interestInSolarBusiness}</p>
                 </div>
               </div>
@@ -148,33 +137,37 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
 
           {/* Column 2: Financial & Commitment */}
           <div className="space-y-6">
-            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-              <h2 className="text-xl font-semibold text-gradient-gold mb-4">Financial Information</h2>
-              <div className="space-y-3">
+            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 shadow-lg">
+              <h2 className="text-xl font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-4">
+                Financial Information
+              </h2>
+              <div className="space-y-4">
                 <div>
-                  <label className="text-sm text-gray-400 font-medium">Desired Monthly Revenue</label>
-                  <p className="text-green-400 font-semibold text-lg">{data.desiredMonthlyRevenue}</p>
+                  <label className="text-sm text-gray-400 font-medium block mb-1">Desired Monthly Revenue</label>
+                  <p className="text-green-400 font-semibold text-xl">{data.desiredMonthlyRevenue}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium">Current Monthly Income</label>
+                  <label className="text-sm text-gray-400 font-medium block mb-1">Current Monthly Income</label>
                   <p className="text-white font-semibold">{data.currentMonthlyIncome}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium">Investment Willingness</label>
+                  <label className="text-sm text-gray-400 font-medium block mb-1">Investment Willingness</label>
                   <p className="text-white leading-relaxed">{data.investmentWillingness}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-              <h2 className="text-xl font-semibold text-gradient-gold mb-4">Commitment & Motivation</h2>
-              <div className="space-y-3">
+            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 shadow-lg">
+              <h2 className="text-xl font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-4">
+                Commitment & Motivation
+              </h2>
+              <div className="space-y-4">
                 <div>
-                  <label className="text-sm text-gray-400 font-medium">Strategy Call Commitment</label>
+                  <label className="text-sm text-gray-400 font-medium block mb-1">Strategy Call Commitment</label>
                   <p className="text-white leading-relaxed">{data.strategyCallCommitment}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 font-medium">Priority Reason</label>
+                  <label className="text-sm text-gray-400 font-medium block mb-1">Priority Reason</label>
                   <p className="text-white leading-relaxed">{data.priorityReason}</p>
                 </div>
               </div>
@@ -183,19 +176,23 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
 
           {/* Column 3: Help Needed & Actions */}
           <div className="space-y-6">
-            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-              <h2 className="text-xl font-semibold text-gradient-gold mb-4">Help Needed Most</h2>
+            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 shadow-lg">
+              <h2 className="text-xl font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-4">
+                Help Needed Most
+              </h2>
               <p className="text-white leading-relaxed">{data.helpNeededMost}</p>
             </div>
 
             {/* Action Buttons */}
-            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-              <h2 className="text-xl font-semibold text-gradient-gold mb-4 text-center">Update Status</h2>
-              <div className="space-y-3">
+            <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 shadow-lg">
+              <h2 className="text-xl font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-6 text-center">
+                Update Status
+              </h2>
+              <div className="space-y-4">
                 <button
                   onClick={() => handleStatusUpdate('Qualified Show-Up')}
                   disabled={isLoading}
-                  className={getStatusButtonClass('Qualified Show-Up') + " w-full"}
+                  className="w-full px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
                 >
                   {isLoading ? 'Updating...' : 'Qualified Show-Up'}
                 </button>
@@ -203,7 +200,7 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                 <button
                   onClick={() => handleStatusUpdate('No Show')}
                   disabled={isLoading}
-                  className={getStatusButtonClass('No Show') + " w-full"}
+                  className="w-full px-6 py-4 bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
                 >
                   {isLoading ? 'Updating...' : 'No Show'}
                 </button>
@@ -211,7 +208,7 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                 <button
                   onClick={() => handleStatusUpdate('Disqualified')}
                   disabled={isLoading}
-                  className={getStatusButtonClass('Disqualified') + " w-full"}
+                  className="w-full px-6 py-4 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
                 >
                   {isLoading ? 'Updating...' : 'Disqualified'}
                 </button>
