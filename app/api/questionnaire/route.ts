@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,6 +19,19 @@ export async function POST(request: NextRequest) {
           { status: 400 }
         )
       }
+    }
+
+    // Dynamically import Prisma only when needed
+    let prisma: any
+    try {
+      const { prisma: prismaClient } = await import('@/lib/prisma')
+      prisma = prismaClient
+    } catch (importError) {
+      console.error('Failed to import Prisma:', importError)
+      return NextResponse.json(
+        { error: 'Database service unavailable' },
+        { status: 503 }
+      )
     }
 
     // Test database connection

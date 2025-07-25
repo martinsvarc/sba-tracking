@@ -5,6 +5,11 @@ const globalForPrisma = globalThis as unknown as {
 }
 
 function createPrismaClient() {
+  // Prevent initialization during build time
+  if (process.env.NODE_ENV === 'production' && !process.env.DATABASE_URL) {
+    throw new Error('DATABASE_URL is required in production')
+  }
+
   return new PrismaClient({
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
     datasources: {
@@ -15,8 +20,18 @@ function createPrismaClient() {
   })
 }
 
-// Only create a new Prisma Client instance if one doesn't already exist
-export const prisma = globalForPrisma.prisma ?? createPrismaClient()
+// Lazy initialization - only create when actually needed
+export function getPrismaClient(): PrismaClient {
+  if (!globalForPrisma.prisma) {
+    globalForPrisma.prisma = createPrismaClient()
+  }
+  return globalForPrisma.prisma
+}
 
-// In development, attach the Prisma Client to the global object
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma 
+// Export a getter that only initializes when called
+export const prisma = new Proxy({} as PrismaClient, {
+  get(target, prop) {
+    const client = getPrismaClient()
+    return client[prop as keyof PrismaClient]
+  }
+}) 

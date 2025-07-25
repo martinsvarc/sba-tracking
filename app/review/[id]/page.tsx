@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation'
-import { prisma } from '@/lib/prisma'
 import QuestionnaireCard from '@/components/QuestionnaireCard'
 
 interface ReviewPageProps {
@@ -10,6 +9,16 @@ interface ReviewPageProps {
 
 async function getQuestionnaire(id: string) {
   try {
+    // Dynamically import Prisma only when needed
+    let prisma: any
+    try {
+      const { prisma: prismaClient } = await import('@/lib/prisma')
+      prisma = prismaClient
+    } catch (importError) {
+      console.error('Failed to import Prisma:', importError)
+      return null
+    }
+
     // Test database connection
     await prisma.$connect()
     
