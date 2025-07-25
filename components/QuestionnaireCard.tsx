@@ -66,9 +66,9 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #111827 0%, #1f2937 50%, #111827 100%)',
       padding: '1rem',
-      fontFamily: 'system-ui, -apple-system, sans-serif'
+      fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
     }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <h1 style={{
@@ -77,11 +77,16 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
             background: 'linear-gradient(135deg, #a855f7, #ec4899)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            marginBottom: '0.5rem'
+            marginBottom: '0.5rem',
+            fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
           }}>
             Questionnaire Review
           </h1>
-          <p style={{ color: '#9ca3af', fontSize: '1.125rem' }}>
+          <p style={{ 
+            color: '#9ca3af', 
+            fontSize: '1.125rem',
+            fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+          }}>
             Review applicant information and update status
           </p>
           {data.status && (
@@ -93,7 +98,8 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                 fontSize: '0.875rem',
                 fontWeight: '600',
                 backgroundColor: '#3b82f6',
-                color: 'white'
+                color: 'white',
+                fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
               }}>
                 Current Status: {data.status}
               </span>
@@ -112,7 +118,8 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
             padding: '0.75rem 1.5rem',
             borderRadius: '0.5rem',
             boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-            zIndex: 50
+            zIndex: 50,
+            fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
           }}>
             {successMessage}
           </div>
@@ -121,7 +128,7 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
         {/* Main Content - 3 Column Layout */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+          gridTemplateColumns: 'repeat(3, 1fr)',
           gap: '2rem',
           marginBottom: '2rem'
         }}>
@@ -132,7 +139,8 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
               borderRadius: '0.75rem',
               padding: '1.5rem',
               border: '1px solid #374151',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+              backdropFilter: 'blur(10px)'
             }}>
               <h2 style={{
                 fontSize: '1.25rem',
@@ -140,26 +148,76 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                 background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                marginBottom: '1rem'
+                marginBottom: '1rem',
+                fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
               }}>
                 Personal Information
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div>
-                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Name</label>
-                  <p style={{ color: 'white', fontWeight: '600', fontSize: '1.125rem' }}>{data.name}</p>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Name</label>
+                  <p style={{ 
+                    color: 'white', 
+                    fontWeight: '600', 
+                    fontSize: '1.125rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>{data.name}</p>
                 </div>
                 <div>
-                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Email</label>
-                  <p style={{ color: 'white', fontWeight: '600', wordBreak: 'break-all' }}>{data.email}</p>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Email</label>
+                  <p style={{ 
+                    color: 'white', 
+                    fontWeight: '600', 
+                    wordBreak: 'break-all',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>{data.email}</p>
                 </div>
                 <div>
-                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Phone</label>
-                  <p style={{ color: 'white', fontWeight: '600' }}>{data.phone}</p>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Phone</label>
+                  <p style={{ 
+                    color: 'white', 
+                    fontWeight: '600',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>{data.phone}</p>
                 </div>
                 <div>
-                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Event ID</label>
-                  <p style={{ color: 'white', fontWeight: '600', fontSize: '0.75rem', wordBreak: 'break-all', lineHeight: '1.2' }}>{data.event_id}</p>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Event ID</label>
+                  <p style={{ 
+                    color: 'white', 
+                    fontWeight: '600', 
+                    fontSize: '0.75rem', 
+                    wordBreak: 'break-all', 
+                    lineHeight: '1.2',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>{data.event_id}</p>
                 </div>
               </div>
             </div>
@@ -169,7 +227,8 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
               borderRadius: '0.75rem',
               padding: '1.5rem',
               border: '1px solid #374151',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+              backdropFilter: 'blur(10px)'
             }}>
               <h2 style={{
                 fontSize: '1.25rem',
@@ -177,22 +236,56 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                 background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                marginBottom: '1rem'
+                marginBottom: '1rem',
+                fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
               }}>
                 Business Goals
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div>
-                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Entrepreneur at Heart</label>
-                  <p style={{ color: 'white', fontWeight: '600' }}>{data.entrepreneurAtHeart}</p>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Entrepreneur at Heart</label>
+                  <p style={{ 
+                    color: 'white', 
+                    fontWeight: '600',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>{data.entrepreneurAtHeart}</p>
                 </div>
                 <div>
-                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Goal with Launching</label>
-                  <p style={{ color: 'white', lineHeight: '1.6' }}>{data.goalWithLaunching}</p>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Goal with Launching</label>
+                  <p style={{ 
+                    color: 'white', 
+                    lineHeight: '1.6',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>{data.goalWithLaunching}</p>
                 </div>
                 <div>
-                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Interest in Solar Business</label>
-                  <p style={{ color: 'white', lineHeight: '1.6' }}>{data.interestInSolarBusiness}</p>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Interest in Solar Business</label>
+                  <p style={{ 
+                    color: 'white', 
+                    lineHeight: '1.6',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>{data.interestInSolarBusiness}</p>
                 </div>
               </div>
             </div>
@@ -205,7 +298,8 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
               borderRadius: '0.75rem',
               padding: '1.5rem',
               border: '1px solid #374151',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+              backdropFilter: 'blur(10px)'
             }}>
               <h2 style={{
                 fontSize: '1.25rem',
@@ -213,22 +307,57 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                 background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                marginBottom: '1rem'
+                marginBottom: '1rem',
+                fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
               }}>
                 Financial Information
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div>
-                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Desired Monthly Revenue</label>
-                  <p style={{ color: '#4ade80', fontWeight: '600', fontSize: '1.25rem' }}>{data.desiredMonthlyRevenue}</p>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Desired Monthly Revenue</label>
+                  <p style={{ 
+                    color: '#4ade80', 
+                    fontWeight: '600', 
+                    fontSize: '1.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>{data.desiredMonthlyRevenue}</p>
                 </div>
                 <div>
-                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Current Monthly Income</label>
-                  <p style={{ color: 'white', fontWeight: '600' }}>{data.currentMonthlyIncome}</p>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Current Monthly Income</label>
+                  <p style={{ 
+                    color: 'white', 
+                    fontWeight: '600',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>{data.currentMonthlyIncome}</p>
                 </div>
                 <div>
-                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Investment Willingness</label>
-                  <p style={{ color: 'white', lineHeight: '1.6' }}>{data.investmentWillingness}</p>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Investment Willingness</label>
+                  <p style={{ 
+                    color: 'white', 
+                    lineHeight: '1.6',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>{data.investmentWillingness}</p>
                 </div>
               </div>
             </div>
@@ -238,7 +367,8 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
               borderRadius: '0.75rem',
               padding: '1.5rem',
               border: '1px solid #374151',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+              backdropFilter: 'blur(10px)'
             }}>
               <h2 style={{
                 fontSize: '1.25rem',
@@ -246,18 +376,41 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                 background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                marginBottom: '1rem'
+                marginBottom: '1rem',
+                fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
               }}>
                 Commitment & Motivation
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div>
-                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Strategy Call Commitment</label>
-                  <p style={{ color: 'white', lineHeight: '1.6' }}>{data.strategyCallCommitment}</p>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Strategy Call Commitment</label>
+                  <p style={{ 
+                    color: 'white', 
+                    lineHeight: '1.6',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>{data.strategyCallCommitment}</p>
                 </div>
                 <div>
-                  <label style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: '500', display: 'block', marginBottom: '0.25rem' }}>Priority Reason</label>
-                  <p style={{ color: 'white', lineHeight: '1.6' }}>{data.priorityReason}</p>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Priority Reason</label>
+                  <p style={{ 
+                    color: 'white', 
+                    lineHeight: '1.6',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>{data.priorityReason}</p>
                 </div>
               </div>
             </div>
@@ -270,7 +423,8 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
               borderRadius: '0.75rem',
               padding: '1.5rem',
               border: '1px solid #374151',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+              backdropFilter: 'blur(10px)'
             }}>
               <h2 style={{
                 fontSize: '1.25rem',
@@ -278,11 +432,16 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                 background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                marginBottom: '1rem'
+                marginBottom: '1rem',
+                fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
               }}>
                 Help Needed Most
               </h2>
-              <p style={{ color: 'white', lineHeight: '1.6' }}>{data.helpNeededMost}</p>
+              <p style={{ 
+                color: 'white', 
+                lineHeight: '1.6',
+                fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+              }}>{data.helpNeededMost}</p>
             </div>
 
             {/* Action Buttons */}
@@ -291,7 +450,8 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
               borderRadius: '0.75rem',
               padding: '1.5rem',
               border: '1px solid #374151',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+              backdropFilter: 'blur(10px)'
             }}>
               <h2 style={{
                 fontSize: '1.25rem',
@@ -300,7 +460,8 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 marginBottom: '1.5rem',
-                textAlign: 'center'
+                textAlign: 'center',
+                fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
               }}>
                 Update Status
               </h2>
@@ -319,7 +480,9 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                     cursor: isLoading ? 'not-allowed' : 'pointer',
                     opacity: isLoading ? 0.5 : 1,
                     transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif',
+                    fontSize: '1rem'
                   }}
                   onMouseEnter={(e) => {
                     if (!isLoading) {
@@ -349,7 +512,9 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                     cursor: isLoading ? 'not-allowed' : 'pointer',
                     opacity: isLoading ? 0.5 : 1,
                     transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif',
+                    fontSize: '1rem'
                   }}
                   onMouseEnter={(e) => {
                     if (!isLoading) {
@@ -379,7 +544,9 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                     cursor: isLoading ? 'not-allowed' : 'pointer',
                     opacity: isLoading ? 0.5 : 1,
                     transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif',
+                    fontSize: '1rem'
                   }}
                   onMouseEnter={(e) => {
                     if (!isLoading) {
