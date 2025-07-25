@@ -1,131 +1,169 @@
-# SBA Tracking - Full-Stack Questionnaire System
+# SBA Tracking System
 
-A complete full-stack questionnaire system built with Next.js, Prisma, and Neon PostgreSQL database.
+A full-stack Next.js application for tracking SBA questionnaire responses with Prisma and Neon PostgreSQL.
 
 ## 🚀 Features
 
-- ✅ **Next.js 14** with App Router
-- ✅ **Prisma ORM** with PostgreSQL (Neon)
-- ✅ **TypeScript** for type safety
-- ✅ **TailwindCSS** for styling
-- ✅ **Dynamic Routes** for questionnaire reviews
-- ✅ **API Routes** for data operations
-- ✅ **Real-time Status Updates**
-- ✅ **Responsive Design**
+- **Questionnaire Management**: Create and track questionnaire responses
+- **Status Updates**: Update questionnaire status (Qualified Show-Up, No Show, Disqualified)
+- **Dynamic Review Pages**: View individual questionnaires with unique URLs
+- **Modern UI**: Clean, responsive design with TailwindCSS
+- **Database Integration**: PostgreSQL with Prisma ORM
 
 ## 🏗️ Architecture
 
-### Database Schema
-```prisma
-model Questionnaire {
-  id              String   @id @default(cuid())
-  createdAt       DateTime @default(now())
-  name            String
-  email           String
-  phone           String
-  eventId         String   @unique
-  entrepreneurAtHeart  String
-  goalWithLaunching     String
-  interestInSolarBusiness String
-  desiredMonthlyRevenue String
-  helpNeededMost        String
-  currentMonthlyIncome  String
-  priorityReason        String
-  investmentWillingness String
-  strategyCallCommitment String
-  status          String?
+- **Frontend**: Next.js 14 (App Router), React, TypeScript, TailwindCSS
+- **Backend**: Next.js API Routes
+- **Database**: PostgreSQL (Neon)
+- **ORM**: Prisma
+- **Deployment**: Vercel
+
+## 📋 API Endpoints
+
+### POST `/api/questionnaire`
+Creates a new questionnaire entry.
+
+**Request Body:**
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "phone": "(555) 123-4567",
+  "eventId": "unique-event-id",
+  "entrepreneurAtHeart": "Yes",
+  "goalWithLaunching": "Build a successful business",
+  "interestInSolarBusiness": "High interest",
+  "desiredMonthlyRevenue": "$10,000",
+  "helpNeededMost": "Marketing support",
+  "currentMonthlyIncome": "$5,000",
+  "priorityReason": "Financial freedom",
+  "investmentWillingness": "Yes",
+  "strategyCallCommitment": "Yes"
 }
 ```
 
-### API Endpoints
-- `POST /api/questionnaire` - Create new questionnaire
-- `POST /api/status-update` - Update questionnaire status
-- `GET /review/[id]` - View questionnaire review page
+**Response:**
+```json
+{
+  "success": true,
+  "id": "clx123...",
+  "reviewUrl": "/review/clx123...",
+  "message": "Questionnaire created successfully"
+}
+```
 
-## 🛠️ Setup Instructions
+### POST `/api/status-update`
+Updates the status of a questionnaire.
 
-### 1. Install Dependencies
+**Request Body:**
+```json
+{
+  "eventId": "unique-event-id",
+  "status": "Qualified Show-Up"
+}
+```
+
+**Valid Status Values:**
+- `"Qualified Show-Up"`
+- `"No Show"`
+- `"Disqualified"`
+
+## 🗄️ Database Setup
+
+### 1. Create Database Table
+
+Run this SQL in your Neon database:
+
+```sql
+-- Create the Questionnaire table
+CREATE TABLE "Questionnaire" (
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "eventId" TEXT NOT NULL,
+    "entrepreneurAtHeart" TEXT NOT NULL,
+    "goalWithLaunching" TEXT NOT NULL,
+    "interestInSolarBusiness" TEXT NOT NULL,
+    "desiredMonthlyRevenue" TEXT NOT NULL,
+    "helpNeededMost" TEXT NOT NULL,
+    "currentMonthlyIncome" TEXT NOT NULL,
+    "priorityReason" TEXT NOT NULL,
+    "investmentWillingness" TEXT NOT NULL,
+    "strategyCallCommitment" TEXT NOT NULL,
+    "status" TEXT,
+
+    CONSTRAINT "Questionnaire_pkey" PRIMARY KEY ("id")
+);
+
+-- Create unique index on eventId
+CREATE UNIQUE INDEX "Questionnaire_eventId_key" ON "Questionnaire"("eventId");
+
+-- Create index on createdAt for better query performance
+CREATE INDEX "Questionnaire_createdAt_idx" ON "Questionnaire"("createdAt");
+```
+
+### 2. Environment Variables
+
+Set these environment variables in Vercel:
+
+- `DATABASE_URL`: Your Neon PostgreSQL connection string
+  - Format: `postgresql://username:password@hostname/database?sslmode=require`
+  - Example: `postgresql://user:pass@ep-abc123.us-east-1.aws.neon.tech/dbname?sslmode=require`
+- `NODE_ENV`: `production`
+
+## 🛠️ Development
+
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+- Neon PostgreSQL database
+
+### Installation
 ```bash
 npm install
 ```
 
-### 2. Database Setup
-1. Create a Neon PostgreSQL database at [neon.tech](https://neon.tech)
-2. Copy your database connection string
-3. Create a `.env.local` file:
+### Environment Setup
+Create a `.env` file:
 ```env
-DATABASE_URL="postgresql://username:password@host:port/database?sslmode=require"
+DATABASE_URL="your-neon-connection-string"
+NODE_ENV=development
 ```
 
-### 3. Database Migration
+### Database Operations
 ```bash
 # Generate Prisma client
 npm run db:generate
 
 # Push schema to database
 npm run db:push
+
+# Open Prisma Studio
+npm run db:studio
 ```
 
-### 4. Start Development Server
+### Development Server
 ```bash
 npm run dev
 ```
 
-## 📝 Usage
-
-### Creating a Questionnaire
-Send a POST request to `/api/questionnaire` with the following JSON payload:
-
-```json
-{
-  "name": "Don Jessop",
-  "email": "donwayne220@gmail.com",
-  "phone": "(385) 455-3967",
-  "eventId": "grav-questionnaire-donwayne220@gmail.com-1753126492842",
-  "entrepreneurAtHeart": "Yes",
-  "goalWithLaunching": "I want to take my current solar business from side-gig to full time wealth generating machine",
-  "interestInSolarBusiness": "I want experts to grind for me and build me a wildly successful solar biz from scratch",
-  "desiredMonthlyRevenue": "$25,000",
-  "helpNeededMost": "I have done door to door for 5 years and got screwed over by a sales company and installer...",
-  "currentMonthlyIncome": "$2.5k - $5k/mo",
-  "priorityReason": "Because I've been trying to do this on my own for five years!...",
-  "investmentWillingness": "Yes - I have the cashflow to invest in myself",
-  "strategyCallCommitment": "Yes - I have double checked my calendar and will commit 100% to the time I choose"
-}
+### Build
+```bash
+npm run build
 ```
 
-Response:
-```json
-{
-  "success": true,
-  "id": "clx1234567890",
-  "reviewUrl": "/review/clx1234567890",
-  "message": "Questionnaire created successfully"
-}
-```
+## 🚀 Deployment
 
-### Updating Status
-Send a POST request to `/api/status-update`:
+### Vercel Deployment
+1. Connect your GitHub repository to Vercel
+2. Set environment variables in Vercel dashboard
+3. Deploy automatically on push to main branch
 
-```json
-{
-  "eventId": "grav-questionnaire-donwayne220@gmail.com-1753126492842",
-  "status": "Qualified Show-Up"
-}
-```
-
-Valid status values: `"Qualified Show-Up"`, `"No Show"`, `"Disqualified"`
-
-### Viewing Questionnaire
-Navigate to `/review/[id]` where `[id]` is the questionnaire ID returned from the creation API.
-
-## 🎨 Design System
-
-The system uses a custom design system with:
-- **Neon Orchid** (#DA70D6) - Primary accent color
-- **Sunset Gold** (#FFD700) - Secondary accent color
-- **Dark Theme** - Obsidian and charcoal backgrounds
-- **Glow Effects** - Subtle neon glows for premium feel
+### Environment Variables for Vercel
+- `DATABASE_URL`: Your Neon PostgreSQL connection string
+- `NODE_ENV`: `production`
 
 ## 📁 Project Structure
 
@@ -134,62 +172,44 @@ sba-tracking/
 ├── app/
 │   ├── api/
 │   │   ├── questionnaire/
-│   │   │   └── route.ts          # POST /api/questionnaire
+│   │   │   └── route.ts
 │   │   └── status-update/
-│   │       └── route.ts          # POST /api/status-update
+│   │       └── route.ts
 │   ├── review/
 │   │   └── [id]/
-│   │       └── page.tsx          # Dynamic review page
-│   ├── globals.css               # Global styles
-│   ├── layout.tsx                # Root layout
-│   └── page.tsx                  # Home page
+│   │       └── page.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
 ├── components/
-│   └── QuestionnaireCard.tsx     # Review card component
+│   └── QuestionnaireCard.tsx
 ├── lib/
-│   └── prisma.ts                 # Prisma client
+│   └── prisma.ts
 ├── prisma/
-│   └── schema.prisma             # Database schema
+│   └── schema.prisma
 ├── package.json
 ├── next.config.js
-├── tailwind.config.js
-└── tsconfig.json
+├── vercel.json
+└── README.md
 ```
 
-## 🚀 Deployment
+## 🔧 Troubleshooting
 
-### Vercel (Recommended)
-1. Push code to GitHub
-2. Connect repository to Vercel
-3. Add environment variables in Vercel dashboard
-4. Deploy automatically
+### Database Connection Issues
+- Ensure `DATABASE_URL` is correctly formatted
+- Verify SSL mode is set to `require`
+- Check that the database exists and is accessible
 
-### Environment Variables for Production
-```env
-DATABASE_URL="your-neon-production-url"
-NEXTAUTH_SECRET="your-production-secret"
-NEXTAUTH_URL="https://your-domain.com"
+### Build Errors
+- Run `npm run db:generate` to regenerate Prisma client
+- Ensure all environment variables are set in Vercel
+- Check that the database schema matches the Prisma schema
+
+### Common DATABASE_URL Format
+```
+postgresql://username:password@hostname/database?sslmode=require
 ```
 
-## 🔧 Development Commands
+## 📝 License
 
-```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-npm run db:generate  # Generate Prisma client
-npm run db:push      # Push schema to database
-npm run db:studio    # Open Prisma Studio
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📄 License
-
-MIT License - see LICENSE file for details 
+MIT License 
