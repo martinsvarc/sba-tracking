@@ -19,9 +19,9 @@ interface QuestionnaireData {
   strategyCallCommitment: string
   status?: string | null
   ghlLink?: string | null
-  callBooked?: boolean
-  appointmentDateTime?: string | null
+  appointmentTime?: string | null
   closerName?: string | null
+  appointmentBooked?: boolean
 }
 
 interface QuestionnaireCardProps {
@@ -34,8 +34,8 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
   const [successMessage, setSuccessMessage] = useState('')
   const [analyticsData, setAnalyticsData] = useState({
     ghlLink: data.ghlLink || '',
-    callBooked: data.callBooked || false,
-    appointmentDateTime: data.appointmentDateTime || '',
+    appointmentBooked: data.appointmentBooked || false,
+    appointmentTime: data.appointmentTime || '',
     closerName: data.closerName || '',
     status: data.status || 'Untracked'
   })
@@ -490,6 +490,151 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
               }}>{data.helpNeededMost}</p>
             </div>
 
+            {/* Appointment Tracking */}
+            <div style={{
+              backgroundColor: 'rgba(31, 41, 55, 0.5)',
+              borderRadius: '0.75rem',
+              padding: '1.5rem',
+              border: '1px solid #374151',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+              backdropFilter: 'blur(10px)'
+            }}>
+              <h2 style={{
+                fontSize: '1.25rem',
+                fontWeight: '600',
+                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                marginBottom: '1rem',
+                fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+              }}>
+                Appointment Tracking
+              </h2>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {/* GHL Link */}
+                {data.ghlLink && (
+                  <div>
+                    <label style={{ 
+                      fontSize: '0.875rem', 
+                      color: '#9ca3af', 
+                      fontWeight: '500', 
+                      display: 'block', 
+                      marginBottom: '0.25rem',
+                      fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                    }}>GHL Link</label>
+                    <button
+                      onClick={() => window.open(data.ghlLink!, '_blank')}
+                      style={{
+                        padding: '0.5rem 1rem',
+                        background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                        color: 'white',
+                        fontWeight: '600',
+                        borderRadius: '0.5rem',
+                        border: 'none',
+                        cursor: 'pointer',
+                        fontSize: '0.875rem',
+                        fontFamily: '"Outfit", system-ui, -apple-system, sans-serif',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.02)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                      }}
+                    >
+                      Open GHL Link
+                    </button>
+                  </div>
+                )}
+
+                {/* Appointment Time */}
+                <div>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Appointment Time</label>
+                  <p style={{ 
+                    color: 'white', 
+                    fontWeight: '600',
+                    fontSize: '1rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>
+                    {data.appointmentTime ? new Date(data.appointmentTime).toLocaleString('en-US', {
+                      weekday: 'long',
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      hour12: true
+                    }) : 'No appointment scheduled'}
+                  </p>
+                </div>
+
+                {/* Closer Name */}
+                <div>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Closer Name</label>
+                  <p style={{ 
+                    color: 'white', 
+                    fontWeight: '600',
+                    fontSize: '1rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>
+                    {data.closerName || 'Not assigned'}
+                  </p>
+                </div>
+
+                {/* Appointment Booked Status */}
+                <div>
+                  <label style={{ 
+                    fontSize: '0.875rem', 
+                    color: '#9ca3af', 
+                    fontWeight: '500', 
+                    display: 'block', 
+                    marginBottom: '0.25rem',
+                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                  }}>Appointment Booked</label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div style={{
+                      width: '1.5rem',
+                      height: '1.5rem',
+                      borderRadius: '50%',
+                      backgroundColor: data.appointmentBooked ? '#10b981' : 'transparent',
+                      border: '2px solid #6b7280',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      {data.appointmentBooked && (
+                        <span style={{ color: 'white', fontSize: '0.75rem', fontWeight: 'bold' }}>✓</span>
+                      )}
+                    </div>
+                    <span style={{ 
+                      color: 'white', 
+                      fontSize: '1rem',
+                      fontWeight: '600',
+                      fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                    }}>
+                      {data.appointmentBooked ? 'Yes' : 'No'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Action Buttons */}
             <div style={{
               backgroundColor: 'rgba(31, 41, 55, 0.5)',
@@ -708,8 +853,8 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                     <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       <input
                         type="checkbox"
-                        checked={analyticsData.callBooked}
-                        onChange={(e) => setAnalyticsData({...analyticsData, callBooked: e.target.checked})}
+                        checked={analyticsData.appointmentBooked}
+                        onChange={(e) => setAnalyticsData({...analyticsData, appointmentBooked: e.target.checked})}
                         style={{
                           width: '1rem',
                           height: '1rem',
@@ -726,20 +871,20 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                     </label>
                   ) : (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <div style={{
-                        width: '1rem',
-                        height: '1rem',
-                        borderRadius: '50%',
-                        backgroundColor: analyticsData.callBooked ? '#10b981' : 'transparent',
-                        border: '2px solid #6b7280'
-                      }}></div>
-                      <span style={{ 
-                        color: 'white', 
-                        fontSize: '0.875rem',
-                        fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
-                      }}>
-                        {analyticsData.callBooked ? 'Yes' : 'No'}
-                      </span>
+                                             <div style={{
+                         width: '1rem',
+                         height: '1rem',
+                         borderRadius: '50%',
+                         backgroundColor: analyticsData.appointmentBooked ? '#10b981' : 'transparent',
+                         border: '2px solid #6b7280'
+                       }}></div>
+                       <span style={{ 
+                         color: 'white', 
+                         fontSize: '0.875rem',
+                         fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                       }}>
+                         {analyticsData.appointmentBooked ? 'Yes' : 'No'}
+                       </span>
                     </div>
                   )}
                 </div>
@@ -754,10 +899,10 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                     fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
                   }}>Appointment Date & Time</label>
                   {isEditing ? (
-                    <input
-                      type="datetime-local"
-                      value={analyticsData.appointmentDateTime ? analyticsData.appointmentDateTime.slice(0, 16) : ''}
-                      onChange={(e) => setAnalyticsData({...analyticsData, appointmentDateTime: e.target.value})}
+                                         <input
+                       type="datetime-local"
+                       value={analyticsData.appointmentTime ? analyticsData.appointmentTime.slice(0, 16) : ''}
+                       onChange={(e) => setAnalyticsData({...analyticsData, appointmentTime: e.target.value})}
                       style={{
                         width: '100%',
                         padding: '0.5rem',
@@ -770,14 +915,14 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                       }}
                     />
                   ) : (
-                    <p style={{ 
-                      color: 'white', 
-                      fontWeight: '600',
-                      fontSize: '0.875rem',
-                      fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
-                    }}>
-                      {analyticsData.appointmentDateTime ? new Date(analyticsData.appointmentDateTime).toLocaleString() : '-'}
-                    </p>
+                                         <p style={{ 
+                       color: 'white', 
+                       fontWeight: '600',
+                       fontSize: '0.875rem',
+                       fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+                     }}>
+                       {analyticsData.appointmentTime ? new Date(analyticsData.appointmentTime).toLocaleString() : '-'}
+                     </p>
                   )}
                 </div>
 

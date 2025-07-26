@@ -57,9 +57,9 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
     strategyCallCommitment: questionnaire.strategyCallCommitment,
     status: questionnaire.status,
     ghlLink: questionnaire.ghlLink,
-    callBooked: questionnaire.callBooked,
-    appointmentDateTime: questionnaire.appointmentDateTime,
-    closerName: questionnaire.closerName
+    appointmentTime: questionnaire.appointmentTime,
+    closerName: questionnaire.closerName,
+    appointmentBooked: questionnaire.appointmentBooked
   }
 
   return <QuestionnaireCard data={data} />

@@ -36,9 +36,9 @@ export async function PATCH(
     const allowedFields = [
       'status',
       'ghlLink',
-      'appointmentDateTime',
+      'appointmentTime',
       'closerName',
-      'callBooked'
+      'appointmentBooked'
     ]
 
     const updateData: any = {}
@@ -56,8 +56,8 @@ export async function PATCH(
         createdAt: true,
         name: true,
         ghlLink: true,
-        callBooked: true,
-        appointmentDateTime: true,
+        appointmentBooked: true,
+        appointmentTime: true,
         closerName: true,
         status: true,
       }
@@ -137,8 +137,8 @@ export async function GET(
         investmentWillingness: true,
         strategyCallCommitment: true,
         ghlLink: true,
-        callBooked: true,
-        appointmentDateTime: true,
+        appointmentBooked: true,
+        appointmentTime: true,
         closerName: true,
         status: true,
       }

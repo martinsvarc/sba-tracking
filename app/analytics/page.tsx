@@ -8,8 +8,8 @@ interface Questionnaire {
   createdAt: string
   name: string
   ghlLink?: string
-  callBooked: boolean
-  appointmentDateTime?: string
+  appointmentBooked: boolean
+  appointmentTime?: string
   closerName?: string
   status: string
 }
@@ -17,7 +17,7 @@ interface Questionnaire {
 interface FilterState {
   closer: string
   timeRange: string
-  callBooked: string
+  appointmentBooked: string
   status: string[]
 }
 
@@ -31,7 +31,7 @@ export default function AnalyticsPage() {
   const [filters, setFilters] = useState<FilterState>({
     closer: '',
     timeRange: 'all',
-    callBooked: 'all',
+    appointmentBooked: 'all',
     status: []
   })
 
@@ -87,10 +87,10 @@ export default function AnalyticsPage() {
       filtered = filtered.filter(q => new Date(q.createdAt) >= startDate)
     }
 
-    // Apply call booked filter
-    if (filters.callBooked !== 'all') {
-      const callBooked = filters.callBooked === 'yes'
-      filtered = filtered.filter(q => q.callBooked === callBooked)
+    // Apply appointment booked filter
+    if (filters.appointmentBooked !== 'all') {
+      const appointmentBooked = filters.appointmentBooked === 'yes'
+      filtered = filtered.filter(q => q.appointmentBooked === appointmentBooked)
     }
 
     // Apply status filter
@@ -103,7 +103,7 @@ export default function AnalyticsPage() {
       let aValue: any = a[sortField]
       let bValue: any = b[sortField]
       
-      if (sortField === 'createdAt' || sortField === 'appointmentDateTime') {
+      if (sortField === 'createdAt' || sortField === 'appointmentTime') {
         aValue = aValue ? new Date(aValue as string).getTime() : 0
         bValue = bValue ? new Date(bValue as string).getTime() : 0
       }
@@ -179,9 +179,9 @@ export default function AnalyticsPage() {
           </div>
           <div className="bg-white rounded-lg shadow p-6">
             <div className="text-2xl font-bold text-green-600">
-              {questionnaires.filter(q => q.callBooked).length}
+              {questionnaires.filter(q => q.appointmentBooked).length}
             </div>
-            <div className="text-sm text-gray-600">Calls Booked</div>
+            <div className="text-sm text-gray-600">Appointments Booked</div>
           </div>
           <div className="bg-white rounded-lg shadow p-6">
             <div className="text-2xl font-bold text-blue-600">
@@ -230,22 +230,22 @@ export default function AnalyticsPage() {
                   </th>
                   <th 
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                    onClick={() => handleSort('callBooked')}
+                    onClick={() => handleSort('appointmentBooked')}
                   >
                     <div className="flex items-center space-x-1">
-                      <span>Call Booked</span>
-                      {sortField === 'callBooked' && (
+                      <span>Appointment Booked</span>
+                      {sortField === 'appointmentBooked' && (
                         <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>
                       )}
                     </div>
                   </th>
                   <th 
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                    onClick={() => handleSort('appointmentDateTime')}
+                    onClick={() => handleSort('appointmentTime')}
                   >
                     <div className="flex items-center space-x-1">
                       <span>Appointment Date & Time</span>
-                      {sortField === 'appointmentDateTime' && (
+                      {sortField === 'appointmentTime' && (
                         <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>
                       )}
                     </div>
@@ -302,21 +302,21 @@ export default function AnalyticsPage() {
                         <span className="text-gray-400">-</span>
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <div className="flex items-center">
-                        <div className={`w-4 h-4 rounded-full border-2 ${
-                          questionnaire.callBooked 
-                            ? 'bg-green-500 border-green-500' 
-                            : 'border-gray-300'
-                        }`}></div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {questionnaire.appointmentDateTime 
-                        ? format(new Date(questionnaire.appointmentDateTime), 'MMM dd, yyyy HH:mm')
-                        : '-'
-                      }
-                    </td>
+                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                       <div className="flex items-center">
+                         <div className={`w-4 h-4 rounded-full border-2 ${
+                           questionnaire.appointmentBooked 
+                             ? 'bg-green-500 border-green-500' 
+                             : 'border-gray-300'
+                         }`}></div>
+                       </div>
+                     </td>
+                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                       {questionnaire.appointmentTime 
+                         ? format(new Date(questionnaire.appointmentTime), 'MMM dd, yyyy HH:mm')
+                         : '-'
+                       }
+                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {questionnaire.closerName || '-'}
                     </td>
@@ -443,19 +443,19 @@ export default function AnalyticsPage() {
               </select>
             </div>
 
-            {/* Call Booked Filter */}
-            <div className="flex items-center space-x-2">
-              <label className="text-sm font-medium text-gray-300">Call Booked:</label>
-              <select
-                value={filters.callBooked}
-                onChange={(e) => setFilters({ ...filters, callBooked: e.target.value })}
-                className="bg-gray-800 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 px-3 py-1"
-              >
-                <option value="all">All</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-            </div>
+                         {/* Appointment Booked Filter */}
+             <div className="flex items-center space-x-2">
+               <label className="text-sm font-medium text-gray-300">Appointment Booked:</label>
+               <select
+                 value={filters.appointmentBooked}
+                 onChange={(e) => setFilters({ ...filters, appointmentBooked: e.target.value })}
+                 className="bg-gray-800 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 px-3 py-1"
+               >
+                 <option value="all">All</option>
+                 <option value="yes">Yes</option>
+                 <option value="no">No</option>
+               </select>
+             </div>
 
             {/* Status Filter */}
             <div className="flex items-center space-x-2">
@@ -489,12 +489,12 @@ export default function AnalyticsPage() {
 
             {/* Clear Filters */}
             <button
-              onClick={() => setFilters({
-                closer: '',
-                timeRange: 'all',
-                callBooked: 'all',
-                status: []
-              })}
+                             onClick={() => setFilters({
+                 closer: '',
+                 timeRange: 'all',
+                 appointmentBooked: 'all',
+                 status: []
+               })}
               className="px-4 py-1 text-sm font-medium text-gray-300 hover:text-white border border-gray-600 rounded-lg hover:bg-gray-700 transition-colors"
             >
               Clear Filters

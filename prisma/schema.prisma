@@ -28,7 +28,7 @@ model Questionnaire {
   strategyCallCommitment String
   status          String?  @default("Untracked")
   ghlLink         String?
-  appointmentDateTime DateTime?
+  appointmentTime DateTime?
   closerName      String?
-  callBooked      Boolean  @default(false)
+  appointmentBooked Boolean @default(false)
 } 

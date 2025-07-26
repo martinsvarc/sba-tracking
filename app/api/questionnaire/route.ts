@@ -61,6 +61,11 @@ export async function POST(request: NextRequest) {
         priorityReason: body.priorityReason,
         investmentWillingness: body.investmentWillingness,
         strategyCallCommitment: body.strategyCallCommitment,
+        // Optional appointment tracking fields
+        ghlLink: body.ghlLink || null,
+        appointmentTime: body.appointmentTime || null,
+        closerName: body.closerName || null,
+        appointmentBooked: body.appointmentBooked || false,
       }
     })
 
