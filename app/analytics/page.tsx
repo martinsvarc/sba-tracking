@@ -300,98 +300,131 @@ export default function AnalyticsPage() {
       }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-          gap: '1.5rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+          gap: '1rem',
           marginBottom: '2rem'
         }}>
           <div style={{ 
-            padding: '1.5rem',
+            padding: '1rem',
             background: 'rgba(30, 30, 32, 0.8)',
             borderRadius: '1rem',
             border: '1px solid rgba(218, 112, 214, 0.2)',
             boxShadow: '0 0 20px rgba(218, 112, 214, 0.1)'
           }}>
             <div style={{
-              fontSize: '2rem',
+              fontSize: '1.5rem',
               fontWeight: 'bold',
               color: 'white'
             }}>{questionnaires.length}</div>
             <div style={{
-              color: '#9ca3af'
+              color: '#9ca3af',
+              fontSize: '0.875rem'
             }}>Total Submissions</div>
           </div>
           <div style={{ 
-            padding: '1.5rem',
+            padding: '1rem',
             background: 'rgba(30, 30, 32, 0.8)',
             borderRadius: '1rem',
             border: '1px solid rgba(218, 112, 214, 0.2)',
             boxShadow: '0 0 20px rgba(218, 112, 214, 0.1)'
           }}>
             <div style={{
-              fontSize: '2rem',
+              fontSize: '1.5rem',
               fontWeight: 'bold',
               color: '#22c55e'
             }}>
               {questionnaires.filter(q => q.appointmentBooked).length}
             </div>
             <div style={{
-              color: '#9ca3af'
+              color: '#9ca3af',
+              fontSize: '0.875rem'
             }}>Appointments Booked</div>
           </div>
           <div style={{ 
-            padding: '1.5rem',
+            padding: '1rem',
             background: 'rgba(30, 30, 32, 0.8)',
             borderRadius: '1rem',
             border: '1px solid rgba(218, 112, 214, 0.2)',
             boxShadow: '0 0 20px rgba(218, 112, 214, 0.1)'
           }}>
             <div style={{
-              fontSize: '2rem',
+              fontSize: '1.5rem',
               fontWeight: 'bold',
               color: '#3b82f6'
             }}>
               {questionnaires.filter(q => q.status === 'Qualified Show-Up').length}
             </div>
             <div style={{
-              color: '#9ca3af'
+              color: '#9ca3af',
+              fontSize: '0.875rem'
             }}>Qualified Show-Ups</div>
           </div>
           <div style={{ 
-            padding: '1.5rem',
+            padding: '1rem',
             background: 'rgba(30, 30, 32, 0.8)',
             borderRadius: '1rem',
             border: '1px solid rgba(218, 112, 214, 0.2)',
             boxShadow: '0 0 20px rgba(218, 112, 214, 0.1)'
           }}>
             <div style={{
-              fontSize: '2rem',
+              fontSize: '1.5rem',
               fontWeight: 'bold',
               color: '#ef4444'
             }}>
               {questionnaires.filter(q => q.status === 'No Show').length}
             </div>
             <div style={{
-              color: '#9ca3af'
+              color: '#9ca3af',
+              fontSize: '0.875rem'
             }}>No Shows</div>
           </div>
           <div style={{ 
-            padding: '1.5rem',
+            padding: '1rem',
             background: 'rgba(30, 30, 32, 0.8)',
             borderRadius: '1rem',
             border: '1px solid rgba(218, 112, 214, 0.2)',
             boxShadow: '0 0 20px rgba(218, 112, 214, 0.1)'
           }}>
             <div style={{
-              fontSize: '2rem',
+              fontSize: '1.5rem',
               fontWeight: 'bold',
               color: '#f59e0b'
             }}>
               {questionnaires.filter(q => q.status === 'Disqualified').length}
             </div>
             <div style={{
-              color: '#9ca3af'
+              color: '#9ca3af',
+              fontSize: '0.875rem'
             }}>Disqualified</div>
           </div>
+          <div style={{ 
+            padding: '1rem',
+            background: 'rgba(30, 30, 32, 0.8)',
+            borderRadius: '1rem',
+            border: '1px solid rgba(218, 112, 214, 0.2)',
+            boxShadow: '0 0 20px rgba(218, 112, 214, 0.1)'
+          }}>
+            <div style={{
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+              color: '#06b6d4'
+            }}>
+              {questionnaires.filter(q => q.appointmentBooked && q.appointmentTime && new Date(q.appointmentTime) > new Date()).length}
+            </div>
+            <div style={{
+              color: '#9ca3af',
+              fontSize: '0.875rem'
+            }}>Upcoming Appointments</div>
+          </div>
+        </div>
+
+        {/* Conversion Rate and Close Rate Cards */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '1.5rem',
+          marginBottom: '2rem'
+        }}>
           <div style={{ 
             padding: '1.5rem',
             background: 'rgba(30, 30, 32, 0.8)',
@@ -408,7 +441,7 @@ export default function AnalyticsPage() {
             </div>
             <div style={{
               color: '#9ca3af'
-            }}>Conversion Rate</div>
+            }}>Application ➝ Meeting Conversion</div>
           </div>
           <div style={{ 
             padding: '1.5rem',
@@ -420,96 +453,166 @@ export default function AnalyticsPage() {
             <div style={{
               fontSize: '2rem',
               fontWeight: 'bold',
-              color: '#06b6d4'
+              color: '#22c55e'
             }}>
-              {questionnaires.filter(q => q.appointmentBooked && q.appointmentTime && new Date(q.appointmentTime) > new Date()).length}
+              {questionnaires.filter(q => q.status === 'Closed').length}
             </div>
             <div style={{
               color: '#9ca3af'
-            }}>Upcoming Appointments</div>
+            }}>Closes</div>
+          </div>
+          <div style={{ 
+            padding: '1.5rem',
+            background: 'rgba(30, 30, 32, 0.8)',
+            borderRadius: '1rem',
+            border: '1px solid rgba(218, 112, 214, 0.2)',
+            boxShadow: '0 0 20px rgba(218, 112, 214, 0.1)'
+          }}>
+            <div style={{
+              fontSize: '2rem',
+              fontWeight: 'bold',
+              color: '#3b82f6'
+            }}>
+              {questionnaires.filter(q => q.status === 'Qualified Show-Up').length > 0 ? ((questionnaires.filter(q => q.status === 'Closed').length / questionnaires.filter(q => q.status === 'Qualified Show-Up').length) * 100).toFixed(1) : '0.0'}%
+            </div>
+            <div style={{
+              color: '#9ca3af'
+            }}>Meeting ➝ Close Rate</div>
           </div>
         </div>
 
         {/* Status Percentages Section */}
-        {questionnaires.filter(q => q.appointmentBooked).length > 0 && (
-          <div style={{
-            background: 'rgba(30, 30, 32, 0.8)',
-            borderRadius: '1rem',
-            border: '1px solid rgba(218, 112, 214, 0.2)',
-            boxShadow: '0 0 20px rgba(218, 112, 214, 0.1)',
-            padding: '1.5rem',
-            marginBottom: '2rem'
-          }}>
-            <h3 style={{
-              color: 'white',
-              fontSize: '1.25rem',
-              fontWeight: '600',
-              marginBottom: '1rem'
-            }}>
-              Status Breakdown (of Booked Appointments)
-            </h3>
+        {(() => {
+          const pastAppointments = questionnaires.filter(q => 
+            q.appointmentBooked && 
+            q.appointmentTime && 
+            new Date(q.appointmentTime) < new Date()
+          )
+          
+          if (pastAppointments.length === 0) return null
+          
+          const qualifiedShowUps = pastAppointments.filter(q => q.status === 'Qualified Show-Up').length
+          const noShows = pastAppointments.filter(q => q.status === 'No Show').length
+          const disqualified = pastAppointments.filter(q => q.status === 'Disqualified').length
+          const untracked = pastAppointments.filter(q => q.status === 'Untracked').length
+          const closed = pastAppointments.filter(q => q.status === 'Closed').length
+          
+          return (
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '1rem'
+              background: 'rgba(30, 30, 32, 0.8)',
+              borderRadius: '1rem',
+              border: '1px solid rgba(218, 112, 214, 0.2)',
+              boxShadow: '0 0 20px rgba(218, 112, 214, 0.1)',
+              padding: '1.5rem',
+              marginBottom: '2rem'
             }}>
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '0.75rem',
-                background: 'rgba(34, 197, 94, 0.1)',
-                borderRadius: '0.5rem',
-                border: '1px solid rgba(34, 197, 94, 0.2)'
+              <h3 style={{
+                color: 'white',
+                fontSize: '1.25rem',
+                fontWeight: '600',
+                marginBottom: '1rem'
               }}>
-                <span style={{ color: '#9ca3af' }}>Qualified Show-Ups:</span>
-                <span style={{ 
-                  color: '#4ade80', 
-                  fontWeight: '600',
-                  fontSize: '1.125rem'
-                }}>
-                  {((questionnaires.filter(q => q.status === 'Qualified Show-Up').length / questionnaires.filter(q => q.appointmentBooked).length) * 100).toFixed(1)}%
-                </span>
-              </div>
+                Status Breakdown (Past Appointments: {pastAppointments.length})
+              </h3>
               <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '0.75rem',
-                background: 'rgba(239, 68, 68, 0.1)',
-                borderRadius: '0.5rem',
-                border: '1px solid rgba(239, 68, 68, 0.2)'
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                gap: '1rem'
               }}>
-                <span style={{ color: '#9ca3af' }}>No Shows:</span>
-                <span style={{ 
-                  color: '#f87171', 
-                  fontWeight: '600',
-                  fontSize: '1.125rem'
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '0.75rem',
+                  background: 'rgba(34, 197, 94, 0.1)',
+                  borderRadius: '0.5rem',
+                  border: '1px solid rgba(34, 197, 94, 0.2)'
                 }}>
-                  {((questionnaires.filter(q => q.status === 'No Show').length / questionnaires.filter(q => q.appointmentBooked).length) * 100).toFixed(1)}%
-                </span>
-              </div>
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '0.75rem',
-                background: 'rgba(245, 158, 11, 0.1)',
-                borderRadius: '0.5rem',
-                border: '1px solid rgba(245, 158, 11, 0.2)'
-              }}>
-                <span style={{ color: '#9ca3af' }}>Disqualified:</span>
-                <span style={{ 
-                  color: '#fbbf24', 
-                  fontWeight: '600',
-                  fontSize: '1.125rem'
+                  <span style={{ color: '#9ca3af' }}>✅ Qualified Show-Ups:</span>
+                  <span style={{ 
+                    color: '#4ade80', 
+                    fontWeight: '600',
+                    fontSize: '1.125rem'
+                  }}>
+                    {((qualifiedShowUps / pastAppointments.length) * 100).toFixed(1)}% ({qualifiedShowUps} of {pastAppointments.length})
+                  </span>
+                </div>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '0.75rem',
+                  background: 'rgba(239, 68, 68, 0.1)',
+                  borderRadius: '0.5rem',
+                  border: '1px solid rgba(239, 68, 68, 0.2)'
                 }}>
-                  {((questionnaires.filter(q => q.status === 'Disqualified').length / questionnaires.filter(q => q.appointmentBooked).length) * 100).toFixed(1)}%
-                </span>
+                  <span style={{ color: '#9ca3af' }}>❌ No Shows:</span>
+                  <span style={{ 
+                    color: '#f87171', 
+                    fontWeight: '600',
+                    fontSize: '1.125rem'
+                  }}>
+                    {((noShows / pastAppointments.length) * 100).toFixed(1)}% ({noShows} of {pastAppointments.length})
+                  </span>
+                </div>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '0.75rem',
+                  background: 'rgba(245, 158, 11, 0.1)',
+                  borderRadius: '0.5rem',
+                  border: '1px solid rgba(245, 158, 11, 0.2)'
+                }}>
+                  <span style={{ color: '#9ca3af' }}>🟡 Disqualified:</span>
+                  <span style={{ 
+                    color: '#fbbf24', 
+                    fontWeight: '600',
+                    fontSize: '1.125rem'
+                  }}>
+                    {((disqualified / pastAppointments.length) * 100).toFixed(1)}% ({disqualified} of {pastAppointments.length})
+                  </span>
+                </div>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '0.75rem',
+                  background: 'rgba(107, 114, 128, 0.1)',
+                  borderRadius: '0.5rem',
+                  border: '1px solid rgba(107, 114, 128, 0.2)'
+                }}>
+                  <span style={{ color: '#9ca3af' }}>⚫️ Untracked:</span>
+                  <span style={{ 
+                    color: '#9ca3af', 
+                    fontWeight: '600',
+                    fontSize: '1.125rem'
+                  }}>
+                    {((untracked / pastAppointments.length) * 100).toFixed(1)}% ({untracked} of {pastAppointments.length})
+                  </span>
+                </div>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '0.75rem',
+                  background: 'rgba(34, 197, 94, 0.1)',
+                  borderRadius: '0.5rem',
+                  border: '1px solid rgba(34, 197, 94, 0.2)'
+                }}>
+                  <span style={{ color: '#9ca3af' }}>🟩 Closed:</span>
+                  <span style={{ 
+                    color: '#22c55e', 
+                    fontWeight: '600',
+                    fontSize: '1.125rem'
+                  }}>
+                    {((closed / pastAppointments.length) * 100).toFixed(1)}% ({closed} of {pastAppointments.length})
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )
+        })()}
 
         <div style={{ 
           overflow: 'hidden',
