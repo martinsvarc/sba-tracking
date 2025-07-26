@@ -146,7 +146,8 @@ export default function AnalyticsPage() {
     'Untracked',
     'Qualified Show-Up',
     'No Show',
-    'Disqualified'
+    'Disqualified',
+    'Closed'
   ]
 
   const formatDate = (dateString: string) => {
@@ -1041,6 +1042,18 @@ export default function AnalyticsPage() {
                               backgroundColor: 'rgba(245, 158, 11, 0.2)',
                               color: '#fbbf24',
                               borderColor: 'rgba(245, 158, 11, 0.3)'
+                            }
+                          : questionnaire.status === 'Closed'
+                          ? {
+                              backgroundColor: 'rgba(15, 118, 110, 0.2)',
+                              color: '#0f766e',
+                              borderColor: 'rgba(15, 118, 110, 0.3)'
+                            }
+                          : questionnaire.status === 'Untracked'
+                          ? {
+                              backgroundColor: 'rgba(107, 114, 128, 0.2)',
+                              color: '#9ca3af',
+                              borderColor: 'rgba(107, 114, 128, 0.3)'
                             }
                           : {
                               backgroundColor: 'rgba(107, 114, 128, 0.2)',

@@ -12,11 +12,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate status values
-    const validStatuses = ['Qualified Show-Up', 'No Show', 'Disqualified']
+    // Validate status values - Updated to include all disposition options
+    const validStatuses = ['Qualified Show-Up', 'No Show', 'Disqualified', 'Closed', 'Untracked']
     if (!validStatuses.includes(body.status)) {
       return NextResponse.json(
-        { error: 'Invalid status. Must be one of: Qualified Show-Up, No Show, Disqualified' },
+        { error: 'Invalid status. Must be one of: Qualified Show-Up, No Show, Disqualified, Closed, Untracked' },
         { status: 400 }
       )
     }
