@@ -210,102 +210,62 @@ export default function AnalyticsPage() {
       paddingBottom: '6rem',
       fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
-      <div style={{
-        background: 'rgba(30, 30, 32, 0.8)',
-        backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(218, 112, 214, 0.2)'
-      }}>
-        <div style={{
-          maxWidth: '80rem',
-          margin: '0 auto',
-          padding: '2rem 1rem'
-        }}>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start'
-          }}>
-            <div>
-              <h1 style={{
-                fontSize: '2.5rem',
-                fontWeight: 'bold',
-                margin: 0,
-                background: 'linear-gradient(135deg, #da70d6 0%, #9333ea 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}>
-                Analytics Dashboard
-              </h1>
-              <p style={{
-                marginTop: '0.5rem',
-                color: '#9ca3af',
-                fontSize: '1.125rem'
-              }}>
-                Master overview of all submitted questionnaires
-              </p>
-              {lastUpdated && (
-                <p style={{
-                  marginTop: '0.25rem',
-                  color: '#6b7280',
-                  fontSize: '0.875rem'
-                }}>
-                  Last updated: {lastUpdated.toLocaleTimeString()}
-                </p>
-              )}
-            </div>
-            <button
-              onClick={() => {
-                fetchQuestionnaires(true)
-              }}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.75rem 1.5rem',
-                border: '1px solid rgba(218, 112, 214, 0.3)',
-                fontSize: '0.875rem',
-                fontWeight: '500',
-                borderRadius: '0.5rem',
-                color: '#da70d6',
-                background: 'rgba(218, 112, 214, 0.1)',
-                cursor: 'pointer',
-                transition: 'all 0.2s'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(218, 112, 214, 0.2)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(218, 112, 214, 0.1)'
-              }}
-            >
-              <svg 
-                width="16" 
-                height="16" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2"
-                style={{
-                  animation: refreshing ? 'spin 1s linear infinite' : 'none'
-                }}
-              >
-                <path d="M21 2v6h-6"></path>
-                <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
-                <path d="M3 22v-6h6"></path>
-                <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
-              </svg>
-              Refresh Data
-            </button>
-          </div>
-        </div>
-      </div>
 
       <div style={{
         maxWidth: '80rem',
         margin: '0 auto',
         padding: '2rem 1rem'
       }}>
+        {/* Refresh Button */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          marginBottom: '1rem'
+        }}>
+          <button
+            onClick={() => {
+              fetchQuestionnaires(true)
+            }}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.5rem 1rem',
+              border: '1px solid rgba(218, 112, 214, 0.3)',
+              fontSize: '0.875rem',
+              fontWeight: '500',
+              borderRadius: '0.5rem',
+              color: '#da70d6',
+              background: 'rgba(218, 112, 214, 0.1)',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(218, 112, 214, 0.2)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(218, 112, 214, 0.1)'
+            }}
+          >
+            <svg 
+              width="16" 
+              height="16" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2"
+              style={{
+                animation: refreshing ? 'spin 1s linear infinite' : 'none'
+              }}
+            >
+              <path d="M21 2v6h-6"></path>
+              <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+              <path d="M3 22v-6h6"></path>
+              <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+            </svg>
+            Refresh Data
+          </button>
+        </div>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
@@ -523,187 +483,193 @@ export default function AnalyticsPage() {
                 Status Breakdown (Past Appointments: {pastAppointments.length})
               </h3>
               <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                gap: '0.75rem'
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '0.75rem',
+                justifyContent: 'space-between'
               }}>
                 <div style={{
                   display: 'flex',
-                  justifyContent: 'space-between',
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  padding: '0.875rem 1rem',
+                  padding: '0.75rem 1rem',
                   background: 'rgba(34, 197, 94, 0.08)',
                   borderRadius: '0.75rem',
                   border: '1px solid rgba(34, 197, 94, 0.15)',
-                  minHeight: '3.5rem'
+                  minWidth: '120px',
+                  flex: '1'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ fontSize: '1.25rem' }}>✅</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                    <span style={{ fontSize: '1rem' }}>✅</span>
                     <span style={{ 
                       color: '#e5e7eb', 
                       fontWeight: '500',
-                      fontSize: '0.875rem'
-                    }}>Qualified Show-Ups</span>
+                      fontSize: '0.75rem'
+                    }}>Qualified</span>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
+                  <div style={{ textAlign: 'center' }}>
                     <div style={{ 
                       color: '#4ade80', 
                       fontWeight: '700',
-                      fontSize: '1rem',
+                      fontSize: '0.875rem',
                       lineHeight: '1.2'
                     }}>
                       {((qualifiedShowUps / pastAppointments.length) * 100).toFixed(1)}%
                     </div>
                     <div style={{ 
                       color: '#9ca3af', 
-                      fontSize: '0.75rem',
+                      fontSize: '0.625rem',
                       lineHeight: '1.2'
                     }}>
-                      {qualifiedShowUps} of {pastAppointments.length}
+                      {qualifiedShowUps}/{pastAppointments.length}
                     </div>
                   </div>
                 </div>
                 <div style={{
                   display: 'flex',
-                  justifyContent: 'space-between',
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  padding: '0.875rem 1rem',
+                  padding: '0.75rem 1rem',
                   background: 'rgba(239, 68, 68, 0.08)',
                   borderRadius: '0.75rem',
                   border: '1px solid rgba(239, 68, 68, 0.15)',
-                  minHeight: '3.5rem'
+                  minWidth: '120px',
+                  flex: '1'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ fontSize: '1.25rem' }}>❌</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                    <span style={{ fontSize: '1rem' }}>❌</span>
                     <span style={{ 
                       color: '#e5e7eb', 
                       fontWeight: '500',
-                      fontSize: '0.875rem'
+                      fontSize: '0.75rem'
                     }}>No Shows</span>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
+                  <div style={{ textAlign: 'center' }}>
                     <div style={{ 
                       color: '#f87171', 
                       fontWeight: '700',
-                      fontSize: '1rem',
+                      fontSize: '0.875rem',
                       lineHeight: '1.2'
                     }}>
                       {((noShows / pastAppointments.length) * 100).toFixed(1)}%
                     </div>
                     <div style={{ 
                       color: '#9ca3af', 
-                      fontSize: '0.75rem',
+                      fontSize: '0.625rem',
                       lineHeight: '1.2'
                     }}>
-                      {noShows} of {pastAppointments.length}
+                      {noShows}/{pastAppointments.length}
                     </div>
                   </div>
                 </div>
                 <div style={{
                   display: 'flex',
-                  justifyContent: 'space-between',
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  padding: '0.875rem 1rem',
+                  padding: '0.75rem 1rem',
                   background: 'rgba(245, 158, 11, 0.08)',
                   borderRadius: '0.75rem',
                   border: '1px solid rgba(245, 158, 11, 0.15)',
-                  minHeight: '3.5rem'
+                  minWidth: '120px',
+                  flex: '1'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ fontSize: '1.25rem' }}>🟡</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                    <span style={{ fontSize: '1rem' }}>🟡</span>
                     <span style={{ 
                       color: '#e5e7eb', 
                       fontWeight: '500',
-                      fontSize: '0.875rem'
+                      fontSize: '0.75rem'
                     }}>Disqualified</span>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
+                  <div style={{ textAlign: 'center' }}>
                     <div style={{ 
                       color: '#fbbf24', 
                       fontWeight: '700',
-                      fontSize: '1rem',
+                      fontSize: '0.875rem',
                       lineHeight: '1.2'
                     }}>
                       {((disqualified / pastAppointments.length) * 100).toFixed(1)}%
                     </div>
                     <div style={{ 
                       color: '#9ca3af', 
-                      fontSize: '0.75rem',
+                      fontSize: '0.625rem',
                       lineHeight: '1.2'
                     }}>
-                      {disqualified} of {pastAppointments.length}
+                      {disqualified}/{pastAppointments.length}
                     </div>
                   </div>
                 </div>
                 <div style={{
                   display: 'flex',
-                  justifyContent: 'space-between',
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  padding: '0.875rem 1rem',
+                  padding: '0.75rem 1rem',
                   background: 'rgba(107, 114, 128, 0.08)',
                   borderRadius: '0.75rem',
                   border: '1px solid rgba(107, 114, 128, 0.15)',
-                  minHeight: '3.5rem'
+                  minWidth: '120px',
+                  flex: '1'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ fontSize: '1.25rem' }}>⚫️</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                    <span style={{ fontSize: '1rem' }}>⚫️</span>
                     <span style={{ 
                       color: '#e5e7eb', 
                       fontWeight: '500',
-                      fontSize: '0.875rem'
+                      fontSize: '0.75rem'
                     }}>Untracked</span>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
+                  <div style={{ textAlign: 'center' }}>
                     <div style={{ 
                       color: '#9ca3af', 
                       fontWeight: '700',
-                      fontSize: '1rem',
+                      fontSize: '0.875rem',
                       lineHeight: '1.2'
                     }}>
                       {((untracked / pastAppointments.length) * 100).toFixed(1)}%
                     </div>
                     <div style={{ 
                       color: '#9ca3af', 
-                      fontSize: '0.75rem',
+                      fontSize: '0.625rem',
                       lineHeight: '1.2'
                     }}>
-                      {untracked} of {pastAppointments.length}
+                      {untracked}/{pastAppointments.length}
                     </div>
                   </div>
                 </div>
                 <div style={{
                   display: 'flex',
-                  justifyContent: 'space-between',
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  padding: '0.875rem 1rem',
-                  background: 'rgba(34, 197, 94, 0.08)',
+                  padding: '0.75rem 1rem',
+                  background: 'rgba(15, 118, 110, 0.08)',
                   borderRadius: '0.75rem',
-                  border: '1px solid rgba(34, 197, 94, 0.15)',
-                  minHeight: '3.5rem'
+                  border: '1px solid rgba(15, 118, 110, 0.15)',
+                  minWidth: '120px',
+                  flex: '1'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ fontSize: '1.25rem' }}>🟩</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                    <span style={{ fontSize: '1rem' }}>🟢</span>
                     <span style={{ 
                       color: '#e5e7eb', 
                       fontWeight: '500',
-                      fontSize: '0.875rem'
+                      fontSize: '0.75rem'
                     }}>Closed</span>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
+                  <div style={{ textAlign: 'center' }}>
                     <div style={{ 
-                      color: '#22c55e', 
+                      color: '#0f766e', 
                       fontWeight: '700',
-                      fontSize: '1rem',
+                      fontSize: '0.875rem',
                       lineHeight: '1.2'
                     }}>
                       {((closed / pastAppointments.length) * 100).toFixed(1)}%
                     </div>
                     <div style={{ 
                       color: '#9ca3af', 
-                      fontSize: '0.75rem',
+                      fontSize: '0.625rem',
                       lineHeight: '1.2'
                     }}>
-                      {closed} of {pastAppointments.length}
+                      {closed}/{pastAppointments.length}
                     </div>
                   </div>
                 </div>
@@ -1163,17 +1129,18 @@ export default function AnalyticsPage() {
         <div style={{
           maxWidth: '80rem',
           margin: '0 auto',
-          padding: '1rem'
+          padding: '0.75rem 1rem'
         }}>
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
             alignItems: 'center',
-            gap: '1rem'
+            gap: '0.75rem',
+            justifyContent: 'space-between'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
               <label style={{
-                fontSize: '0.875rem',
+                fontSize: '0.75rem',
                 fontWeight: '500',
                 color: '#9ca3af'
               }}>Closer:</label>
@@ -1184,9 +1151,9 @@ export default function AnalyticsPage() {
                   background: 'rgba(18, 18, 18, 0.8)',
                   border: '1px solid #4b5563',
                   color: 'white',
-                  fontSize: '0.875rem',
-                  borderRadius: '0.5rem',
-                  padding: '0.5rem 0.75rem',
+                  fontSize: '0.75rem',
+                  borderRadius: '0.375rem',
+                  padding: '0.375rem 0.5rem',
                   transition: 'all 0.2s'
                 }}
               >
@@ -1197,12 +1164,12 @@ export default function AnalyticsPage() {
               </select>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
               <label style={{
-                fontSize: '0.875rem',
+                fontSize: '0.75rem',
                 fontWeight: '500',
                 color: '#9ca3af'
-              }}>Time Range:</label>
+              }}>Time:</label>
               <select
                 value={filters.timeRange}
                 onChange={(e) => setFilters({ ...filters, timeRange: e.target.value })}
@@ -1210,9 +1177,9 @@ export default function AnalyticsPage() {
                   background: 'rgba(18, 18, 18, 0.8)',
                   border: '1px solid #4b5563',
                   color: 'white',
-                  fontSize: '0.875rem',
-                  borderRadius: '0.5rem',
-                  padding: '0.5rem 0.75rem',
+                  fontSize: '0.75rem',
+                  borderRadius: '0.375rem',
+                  padding: '0.375rem 0.5rem',
                   transition: 'all 0.2s'
                 }}
               >
@@ -1223,12 +1190,12 @@ export default function AnalyticsPage() {
               </select>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
               <label style={{
-                fontSize: '0.875rem',
+                fontSize: '0.75rem',
                 fontWeight: '500',
                 color: '#9ca3af'
-              }}>Appointment Booked:</label>
+              }}>Booked:</label>
               <select
                 value={filters.appointmentBooked}
                 onChange={(e) => setFilters({ ...filters, appointmentBooked: e.target.value })}
@@ -1236,9 +1203,9 @@ export default function AnalyticsPage() {
                   background: 'rgba(18, 18, 18, 0.8)',
                   border: '1px solid #4b5563',
                   color: 'white',
-                  fontSize: '0.875rem',
-                  borderRadius: '0.5rem',
-                  padding: '0.5rem 0.75rem',
+                  fontSize: '0.75rem',
+                  borderRadius: '0.375rem',
+                  padding: '0.375rem 0.5rem',
                   transition: 'all 0.2s'
                 }}
               >
@@ -1248,15 +1215,15 @@ export default function AnalyticsPage() {
               </select>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
               <label style={{
-                fontSize: '0.875rem',
+                fontSize: '0.75rem',
                 fontWeight: '500',
                 color: '#9ca3af'
               }}>Status:</label>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.375rem' }}>
                 {getStatusOptions().map((status) => (
-                  <label key={status} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <label key={status} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <input
                       type="checkbox"
                       checked={filters.status.includes(status)}
@@ -1274,8 +1241,8 @@ export default function AnalyticsPage() {
                         }
                       }}
                       style={{
-                        width: '1rem',
-                        height: '1rem',
+                        width: '0.875rem',
+                        height: '0.875rem',
                         color: '#9333ea',
                         background: 'rgba(18, 18, 18, 0.8)',
                         border: '1px solid #4b5563',
@@ -1283,7 +1250,7 @@ export default function AnalyticsPage() {
                       }}
                     />
                     <span style={{
-                      fontSize: '0.875rem',
+                      fontSize: '0.75rem',
                       color: '#9ca3af'
                     }}>{status}</span>
                   </label>
@@ -1299,12 +1266,12 @@ export default function AnalyticsPage() {
                 status: []
               })}
               style={{
-                padding: '0.5rem 1rem',
-                fontSize: '0.875rem',
+                padding: '0.375rem 0.75rem',
+                fontSize: '0.75rem',
                 fontWeight: '500',
                 color: '#9ca3af',
                 border: '1px solid #4b5563',
-                borderRadius: '0.5rem',
+                borderRadius: '0.375rem',
                 background: 'rgba(18, 18, 18, 0.8)',
                 cursor: 'pointer',
                 transition: 'all 0.2s'
@@ -1318,7 +1285,7 @@ export default function AnalyticsPage() {
                 e.currentTarget.style.background = 'rgba(18, 18, 18, 0.8)'
               }}
             >
-              Clear Filters
+              Clear
             </button>
           </div>
         </div>
