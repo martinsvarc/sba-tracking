@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 
 interface QuestionnaireData {
   id?: string
@@ -32,8 +32,23 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [successMessage, setSuccessMessage] = useState('')
+  const [currentStatus, setCurrentStatus] = useState(data.status || 'Untracked')
+
+  // Debounced status update function
+  const debouncedStatusUpdate = useCallback(
+    (() => {
+      let timeoutId: NodeJS.Timeout
+      return (status: string) => {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => handleStatusUpdate(status), 300)
+      }
+    })(),
+    []
+  )
 
   const handleStatusUpdate = async (status: string) => {
+    if (isLoading || status === currentStatus) return
+    
     setIsLoading(true)
     try {
       const response = await fetch('/api/status-update', {
@@ -49,6 +64,7 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
 
       if (response.ok) {
         const result = await response.json()
+        setCurrentStatus(status)
         setSuccessMessage(result.message)
         setShowSuccess(true)
         setTimeout(() => setShowSuccess(false), 3000)
@@ -66,12 +82,22 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
     }
   }
 
+  const statusButtons = [
+    { label: 'Qualified Show-Up', status: 'Qualified Show-Up', emoji: '✅', color: 'linear-gradient(135deg, #10b981, #059669)' },
+    { label: 'No Show', status: 'No Show', emoji: '❌', color: 'linear-gradient(135deg, #f59e0b, #d97706)' },
+    { label: 'Disqualified', status: 'Disqualified', emoji: '🟡', color: 'linear-gradient(135deg, #ef4444, #dc2626)' },
+    { label: 'Closed', status: 'Closed', emoji: '🟢', color: 'linear-gradient(135deg, #0f766e, #0d5a5a)' },
+    { label: 'Untracked', status: 'Untracked', emoji: '⚫', color: 'linear-gradient(135deg, #6b7280, #4b5563)' }
+  ]
+
   return (
     <div style={{
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #111827 0%, #1f2937 50%, #111827 100%)',
       padding: '1rem',
-      fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+      paddingBottom: '120px', // Space for sticky footer
+      fontFamily: '"Outfit", system-ui, -apple-system, sans-serif',
+      position: 'relative'
     }}>
       <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
         {/* Header */}
@@ -559,158 +585,97 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ data }) => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
 
-            {/* Action Buttons */}
-            <div style={{
-              backgroundColor: 'rgba(31, 41, 55, 0.5)',
-              borderRadius: '0.75rem',
-              padding: '1.5rem',
-              border: '1px solid #374151',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-              backdropFilter: 'blur(10px)'
-            }}>
-              <h2 style={{
-                fontSize: '1.25rem',
-                fontWeight: '600',
-                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                marginBottom: '1.5rem',
-                textAlign: 'center',
-                fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
-              }}>
-                Update Status
-              </h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      {/* Sticky Footer - Status Update */}
+      <div style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(31, 41, 55, 0.95) 100%)',
+        backdropFilter: 'blur(20px)',
+        borderTop: '1px solid rgba(55, 65, 81, 0.5)',
+        padding: '1rem',
+        zIndex: 100,
+        boxShadow: '0 -10px 25px -5px rgba(0, 0, 0, 0.3)'
+      }}>
+        <div style={{ 
+          maxWidth: '1400px', 
+          margin: '0 auto',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.75rem'
+        }}>
+          <h3 style={{
+            fontSize: '1.125rem',
+            fontWeight: '600',
+            color: 'white',
+            textAlign: 'center',
+            margin: 0,
+            fontFamily: '"Outfit", system-ui, -apple-system, sans-serif'
+          }}>
+            Update Status
+          </h3>
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '0.75rem',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            {statusButtons.map((button) => {
+              const isSelected = currentStatus === button.status
+              const isDisabled = isLoading
+              
+              return (
                 <button
-                  onClick={() => handleStatusUpdate('Qualified Show-Up')}
-                  disabled={isLoading}
+                  key={button.status}
+                  onClick={() => debouncedStatusUpdate(button.status)}
+                  disabled={isDisabled}
                   style={{
-                    width: '100%',
-                    padding: '1rem 1.5rem',
-                    background: 'linear-gradient(135deg, #10b981, #059669)',
+                    padding: '0.75rem 1.25rem',
+                    background: isSelected ? button.color : 'rgba(55, 65, 81, 0.5)',
                     color: 'white',
                     fontWeight: '600',
                     borderRadius: '0.75rem',
-                    border: 'none',
-                    cursor: isLoading ? 'not-allowed' : 'pointer',
-                    opacity: isLoading ? 0.5 : 1,
+                    border: isSelected ? '2px solid rgba(255, 255, 255, 0.3)' : '2px solid transparent',
+                    cursor: isDisabled ? 'not-allowed' : 'pointer',
+                    opacity: isDisabled ? 0.5 : 1,
                     transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    boxShadow: isSelected 
+                      ? '0 0 20px rgba(255, 255, 255, 0.2), 0 4px 6px -1px rgba(0, 0, 0, 0.1)' 
+                      : '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                     fontFamily: '"Outfit", system-ui, -apple-system, sans-serif',
-                    fontSize: '1rem'
+                    fontSize: '0.875rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    minWidth: 'fit-content'
                   }}
                   onMouseEnter={(e) => {
-                    if (!isLoading) {
-                      e.currentTarget.style.transform = 'scale(1.02)';
-                      e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
+                    if (!isDisabled && !isSelected) {
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                      e.currentTarget.style.boxShadow = '0 8px 15px -3px rgba(0, 0, 0, 0.2)';
                     }
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'scale(1)';
-                    e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                    e.currentTarget.style.boxShadow = isSelected 
+                      ? '0 0 20px rgba(255, 255, 255, 0.2), 0 4px 6px -1px rgba(0, 0, 0, 0.1)' 
+                      : '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
                   }}
                 >
-                  {isLoading ? 'Updating...' : 'Qualified Show-Up'}
+                  <span style={{ fontSize: '1rem' }}>{button.emoji}</span>
+                  <span>{button.label}</span>
+                  {isLoading && currentStatus === button.status && (
+                    <span style={{ fontSize: '0.75rem' }}>...</span>
+                  )}
                 </button>
-                
-                <button
-                  onClick={() => handleStatusUpdate('No Show')}
-                  disabled={isLoading}
-                  style={{
-                    width: '100%',
-                    padding: '1rem 1.5rem',
-                    background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                    color: 'white',
-                    fontWeight: '600',
-                    borderRadius: '0.75rem',
-                    border: 'none',
-                    cursor: isLoading ? 'not-allowed' : 'pointer',
-                    opacity: isLoading ? 0.5 : 1,
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif',
-                    fontSize: '1rem'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isLoading) {
-                      e.currentTarget.style.transform = 'scale(1.02)';
-                      e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                    e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-                  }}
-                >
-                  {isLoading ? 'Updating...' : 'No Show'}
-                </button>
-                
-                <button
-                  onClick={() => handleStatusUpdate('Disqualified')}
-                  disabled={isLoading}
-                  style={{
-                    width: '100%',
-                    padding: '1rem 1.5rem',
-                    background: 'linear-gradient(135deg, #ef4444, #dc2626)',
-                    color: 'white',
-                    fontWeight: '600',
-                    borderRadius: '0.75rem',
-                    border: 'none',
-                    cursor: isLoading ? 'not-allowed' : 'pointer',
-                    opacity: isLoading ? 0.5 : 1,
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif',
-                    fontSize: '1rem'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isLoading) {
-                      e.currentTarget.style.transform = 'scale(1.02)';
-                      e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                    e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-                  }}
-                >
-                  {isLoading ? 'Updating...' : 'Disqualified'}
-                </button>
-
-                <button
-                  onClick={() => handleStatusUpdate('Closed')}
-                  disabled={isLoading}
-                  style={{
-                    width: '100%',
-                    padding: '1rem 1.5rem',
-                    background: 'linear-gradient(135deg, #0f766e, #0d5a5a)',
-                    color: 'white',
-                    fontWeight: '600',
-                    borderRadius: '0.75rem',
-                    border: 'none',
-                    cursor: isLoading ? 'not-allowed' : 'pointer',
-                    opacity: isLoading ? 0.5 : 1,
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                    fontFamily: '"Outfit", system-ui, -apple-system, sans-serif',
-                    fontSize: '1rem'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isLoading) {
-                      e.currentTarget.style.transform = 'scale(1.02)';
-                      e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                    e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-                  }}
-                >
-                  {isLoading ? 'Updating...' : 'Closed'}
-                </button>
-              </div>
-            </div>
+              )
+            })}
           </div>
         </div>
       </div>

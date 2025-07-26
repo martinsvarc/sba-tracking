@@ -33,8 +33,8 @@ export async function PATCH(
     }
 
     // Update questionnaire with allowed fields
+    // Status field is explicitly excluded - use /api/status-update for status changes
     const allowedFields = [
-      'status',
       'ghlLink',
       'appointmentTime',
       'closerName',

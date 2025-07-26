@@ -36,7 +36,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Prepare update data
+    // Prepare update data - only appointment-related fields allowed
+    // Status field is explicitly excluded from this API
     const updateData: any = {}
     
     if (body.appointmentTime !== undefined) {
@@ -49,6 +50,10 @@ export async function POST(request: NextRequest) {
     
     if (body.appointmentBooked !== undefined) {
       updateData.appointmentBooked = body.appointmentBooked
+    }
+
+    if (body.ghlLink !== undefined) {
+      updateData.ghlLink = body.ghlLink
     }
 
     // Update questionnaire

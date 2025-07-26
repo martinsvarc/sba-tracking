@@ -46,6 +46,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create questionnaire in database
+    // Always set status to "Untracked" for new questionnaires
     const questionnaire = await prisma.questionnaire.create({
       data: {
         name: body.name,
@@ -66,6 +67,8 @@ export async function POST(request: NextRequest) {
         appointmentTime: body.appointmentTime || null,
         closerName: body.closerName || null,
         appointmentBooked: body.appointmentBooked || false,
+        // Always set status to "Untracked" for new questionnaires
+        status: 'Untracked'
       }
     })
 
