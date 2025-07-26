@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { format } from 'date-fns'
 
 interface Questionnaire {
   id: string
@@ -138,6 +137,18 @@ export default function AnalyticsPage() {
     'Disqualified'
   ]
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    })
+  }
+
   const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -151,19 +162,24 @@ export default function AnalyticsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading analytics data...</p>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 pb-24">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <h1 className="text-3xl font-bold text-gray-900">Analytics Dashboard</h1>
-          <p className="mt-2 text-gray-600">
+      <div className="bg-black/20 backdrop-blur-sm border-b border-gray-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            Analytics Dashboard
+          </h1>
+          <p className="mt-2 text-gray-300 text-lg">
             Master overview of all submitted questionnaires
           </p>
         </div>
@@ -172,163 +188,163 @@ export default function AnalyticsPage() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="text-2xl font-bold text-gray-900">{questionnaires.length}</div>
-            <div className="text-sm text-gray-600">Total Submissions</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-all">
+            <div className="text-3xl font-bold text-white">{questionnaires.length}</div>
+            <div className="text-gray-300">Total Submissions</div>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="text-2xl font-bold text-green-600">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-all">
+            <div className="text-3xl font-bold text-green-400">
               {questionnaires.filter(q => q.appointmentBooked).length}
             </div>
-            <div className="text-sm text-gray-600">Appointments Booked</div>
+            <div className="text-gray-300">Appointments Booked</div>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="text-2xl font-bold text-blue-600">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-all">
+            <div className="text-3xl font-bold text-blue-400">
               {questionnaires.filter(q => q.status === 'Qualified Show-Up').length}
             </div>
-            <div className="text-sm text-gray-600">Qualified Show-Ups</div>
+            <div className="text-gray-300">Qualified Show-Ups</div>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="text-2xl font-bold text-red-600">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-all">
+            <div className="text-3xl font-bold text-red-400">
               {questionnaires.filter(q => q.status === 'No Show').length}
             </div>
-            <div className="text-sm text-gray-600">No Shows</div>
+            <div className="text-gray-300">No Shows</div>
           </div>
         </div>
 
         {/* Table */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-white/20">
+              <thead className="bg-black/20">
                 <tr>
                   <th 
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                    className="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-white/10 transition-colors"
                     onClick={() => handleSort('createdAt')}
                   >
-                    <div className="flex items-center space-x-1">
+                    <div className="flex items-center space-x-2">
                       <span>Date Created</span>
                       {sortField === 'createdAt' && (
-                        <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                        <span className="text-blue-400">{sortDirection === 'asc' ? '↑' : '↓'}</span>
                       )}
                     </div>
                   </th>
                   <th 
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                    className="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-white/10 transition-colors"
                     onClick={() => handleSort('name')}
                   >
-                    <div className="flex items-center space-x-1">
+                    <div className="flex items-center space-x-2">
                       <span>Name</span>
                       {sortField === 'name' && (
-                        <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                        <span className="text-blue-400">{sortDirection === 'asc' ? '↑' : '↓'}</span>
                       )}
                     </div>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                     GHL Link
                   </th>
                   <th 
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                    className="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-white/10 transition-colors"
                     onClick={() => handleSort('appointmentBooked')}
                   >
-                    <div className="flex items-center space-x-1">
+                    <div className="flex items-center space-x-2">
                       <span>Appointment Booked</span>
                       {sortField === 'appointmentBooked' && (
-                        <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                        <span className="text-blue-400">{sortDirection === 'asc' ? '↑' : '↓'}</span>
                       )}
                     </div>
                   </th>
                   <th 
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                    className="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-white/10 transition-colors"
                     onClick={() => handleSort('appointmentTime')}
                   >
-                    <div className="flex items-center space-x-1">
+                    <div className="flex items-center space-x-2">
                       <span>Appointment Date & Time</span>
                       {sortField === 'appointmentTime' && (
-                        <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                        <span className="text-blue-400">{sortDirection === 'asc' ? '↑' : '↓'}</span>
                       )}
                     </div>
                   </th>
                   <th 
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                    className="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-white/10 transition-colors"
                     onClick={() => handleSort('closerName')}
                   >
-                    <div className="flex items-center space-x-1">
+                    <div className="flex items-center space-x-2">
                       <span>Closer Name</span>
                       {sortField === 'closerName' && (
-                        <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                        <span className="text-blue-400">{sortDirection === 'asc' ? '↑' : '↓'}</span>
                       )}
                     </div>
                   </th>
                   <th 
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                    className="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-white/10 transition-colors"
                     onClick={() => handleSort('status')}
                   >
-                    <div className="flex items-center space-x-1">
+                    <div className="flex items-center space-x-2">
                       <span>Status</span>
                       {sortField === 'status' && (
-                        <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                        <span className="text-blue-400">{sortDirection === 'asc' ? '↑' : '↓'}</span>
                       )}
                     </div>
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="divide-y divide-white/20">
                 {paginatedData.map((questionnaire) => (
                   <tr 
                     key={questionnaire.id}
-                    className="hover:bg-gray-50 cursor-pointer"
+                    className="hover:bg-white/5 cursor-pointer transition-colors"
                     onClick={() => handleRowClick(questionnaire.id)}
                   >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {format(new Date(questionnaire.createdAt), 'MMM dd, yyyy HH:mm')}
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
+                      {formatDate(questionnaire.createdAt)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">
                       {questionnaire.name}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm">
                       {questionnaire.ghlLink ? (
                         <button
                           onClick={(e) => {
                             e.stopPropagation()
                             window.open(questionnaire.ghlLink, '_blank')
                           }}
-                          className="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                          className="inline-flex items-center px-3 py-1 border border-blue-500 text-xs font-medium rounded-lg text-blue-400 bg-blue-500/20 hover:bg-blue-500/30 transition-colors"
                         >
                           Open GHL
                         </button>
                       ) : (
-                        <span className="text-gray-400">-</span>
+                        <span className="text-gray-500">-</span>
                       )}
                     </td>
-                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                       <div className="flex items-center">
-                         <div className={`w-4 h-4 rounded-full border-2 ${
-                           questionnaire.appointmentBooked 
-                             ? 'bg-green-500 border-green-500' 
-                             : 'border-gray-300'
-                         }`}></div>
-                       </div>
-                     </td>
-                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                       {questionnaire.appointmentTime 
-                         ? format(new Date(questionnaire.appointmentTime), 'MMM dd, yyyy HH:mm')
-                         : '-'
-                       }
-                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                      <div className="flex items-center">
+                        <div className={`w-4 h-4 rounded-full border-2 ${
+                          questionnaire.appointmentBooked 
+                            ? 'bg-green-500 border-green-500' 
+                            : 'border-gray-500'
+                        }`}></div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
+                      {questionnaire.appointmentTime 
+                        ? formatDate(questionnaire.appointmentTime)
+                        : '-'
+                      }
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
                       {questionnaire.closerName || '-'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                      <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${
                         questionnaire.status === 'Qualified Show-Up' 
-                          ? 'bg-green-100 text-green-800'
+                          ? 'bg-green-500/20 text-green-400 border border-green-500/30'
                           : questionnaire.status === 'No Show'
-                          ? 'bg-red-100 text-red-800'
+                          ? 'bg-red-500/20 text-red-400 border border-red-500/30'
                           : questionnaire.status === 'Disqualified'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-gray-100 text-gray-800'
+                          ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+                          : 'bg-gray-500/20 text-gray-400 border border-gray-500/30'
                       }`}>
                         {questionnaire.status}
                       </span>
@@ -341,43 +357,43 @@ export default function AnalyticsPage() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+            <div className="bg-black/20 px-6 py-4 flex items-center justify-between border-t border-white/20">
               <div className="flex-1 flex justify-between sm:hidden">
                 <button
                   onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
-                  className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+                  className="relative inline-flex items-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-lg text-gray-300 bg-black/20 hover:bg-black/40 disabled:opacity-50 transition-colors"
                 >
                   Previous
                 </button>
                 <button
                   onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                   disabled={currentPage === totalPages}
-                  className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+                  className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-lg text-gray-300 bg-black/20 hover:bg-black/40 disabled:opacity-50 transition-colors"
                 >
                   Next
                 </button>
               </div>
               <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                 <div>
-                  <p className="text-sm text-gray-700">
+                  <p className="text-sm text-gray-300">
                     Showing{' '}
-                    <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span>
+                    <span className="font-medium text-white">{(currentPage - 1) * itemsPerPage + 1}</span>
                     {' '}to{' '}
-                    <span className="font-medium">
+                    <span className="font-medium text-white">
                       {Math.min(currentPage * itemsPerPage, filteredData.length)}
                     </span>
                     {' '}of{' '}
-                    <span className="font-medium">{filteredData.length}</span>
+                    <span className="font-medium text-white">{filteredData.length}</span>
                     {' '}results
                   </p>
                 </div>
                 <div>
-                  <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                  <nav className="relative z-0 inline-flex rounded-lg shadow-sm -space-x-px">
                     <button
                       onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                       disabled={currentPage === 1}
-                      className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                      className="relative inline-flex items-center px-3 py-2 rounded-l-lg border border-gray-600 bg-black/20 text-sm font-medium text-gray-300 hover:bg-black/40 disabled:opacity-50 transition-colors"
                     >
                       Previous
                     </button>
@@ -385,10 +401,10 @@ export default function AnalyticsPage() {
                       <button
                         key={page}
                         onClick={() => setCurrentPage(page)}
-                        className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                        className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors ${
                           page === currentPage
-                            ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
-                            : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                            ? 'z-10 bg-blue-500/20 border-blue-500 text-blue-400'
+                            : 'bg-black/20 border-gray-600 text-gray-300 hover:bg-black/40'
                         }`}
                       >
                         {page}
@@ -397,7 +413,7 @@ export default function AnalyticsPage() {
                     <button
                       onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                       disabled={currentPage === totalPages}
-                      className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                      className="relative inline-flex items-center px-3 py-2 rounded-r-lg border border-gray-600 bg-black/20 text-sm font-medium text-gray-300 hover:bg-black/40 disabled:opacity-50 transition-colors"
                     >
                       Next
                     </button>
@@ -410,7 +426,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Floating Filter Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-md border-t border-gray-700 z-50">
+      <div className="fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-md border-t border-gray-700 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-wrap items-center gap-4">
             {/* Closer Filter */}
@@ -419,7 +435,7 @@ export default function AnalyticsPage() {
               <select
                 value={filters.closer}
                 onChange={(e) => setFilters({ ...filters, closer: e.target.value })}
-                className="bg-gray-800 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 px-3 py-1"
+                className="bg-black/40 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 px-3 py-2 transition-colors"
               >
                 <option value="">All Closers</option>
                 {getUniqueClosers().map((closer) => (
@@ -434,7 +450,7 @@ export default function AnalyticsPage() {
               <select
                 value={filters.timeRange}
                 onChange={(e) => setFilters({ ...filters, timeRange: e.target.value })}
-                className="bg-gray-800 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 px-3 py-1"
+                className="bg-black/40 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 px-3 py-2 transition-colors"
               >
                 <option value="all">All Time</option>
                 <option value="7days">Last 7 Days</option>
@@ -443,26 +459,26 @@ export default function AnalyticsPage() {
               </select>
             </div>
 
-                         {/* Appointment Booked Filter */}
-             <div className="flex items-center space-x-2">
-               <label className="text-sm font-medium text-gray-300">Appointment Booked:</label>
-               <select
-                 value={filters.appointmentBooked}
-                 onChange={(e) => setFilters({ ...filters, appointmentBooked: e.target.value })}
-                 className="bg-gray-800 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 px-3 py-1"
-               >
-                 <option value="all">All</option>
-                 <option value="yes">Yes</option>
-                 <option value="no">No</option>
-               </select>
-             </div>
+            {/* Appointment Booked Filter */}
+            <div className="flex items-center space-x-2">
+              <label className="text-sm font-medium text-gray-300">Appointment Booked:</label>
+              <select
+                value={filters.appointmentBooked}
+                onChange={(e) => setFilters({ ...filters, appointmentBooked: e.target.value })}
+                className="bg-black/40 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 px-3 py-2 transition-colors"
+              >
+                <option value="all">All</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
 
             {/* Status Filter */}
             <div className="flex items-center space-x-2">
               <label className="text-sm font-medium text-gray-300">Status:</label>
               <div className="flex flex-wrap gap-2">
                 {getStatusOptions().map((status) => (
-                  <label key={status} className="flex items-center space-x-1">
+                  <label key={status} className="flex items-center space-x-2">
                     <input
                       type="checkbox"
                       checked={filters.status.includes(status)}
@@ -479,7 +495,7 @@ export default function AnalyticsPage() {
                           })
                         }
                       }}
-                      className="w-4 h-4 text-blue-600 bg-gray-800 border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
+                      className="w-4 h-4 text-blue-600 bg-black/40 border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
                     />
                     <span className="text-sm text-gray-300">{status}</span>
                   </label>
@@ -489,13 +505,13 @@ export default function AnalyticsPage() {
 
             {/* Clear Filters */}
             <button
-                             onClick={() => setFilters({
-                 closer: '',
-                 timeRange: 'all',
-                 appointmentBooked: 'all',
-                 status: []
-               })}
-              className="px-4 py-1 text-sm font-medium text-gray-300 hover:text-white border border-gray-600 rounded-lg hover:bg-gray-700 transition-colors"
+              onClick={() => setFilters({
+                closer: '',
+                timeRange: 'all',
+                appointmentBooked: 'all',
+                status: []
+              })}
+              className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white border border-gray-600 rounded-lg hover:bg-black/40 transition-colors"
             >
               Clear Filters
             </button>
