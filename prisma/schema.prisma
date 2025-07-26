@@ -26,5 +26,9 @@ model Questionnaire {
   priorityReason        String
   investmentWillingness String
   strategyCallCommitment String
-  status          String?
+  status          String?  @default("Untracked")
+  ghlLink         String?
+  appointmentDateTime DateTime?
+  closerName      String?
+  callBooked      Boolean  @default(false)
 } 

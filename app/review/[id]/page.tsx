@@ -41,6 +41,7 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
 
   // Transform the data to match the expected format
   const data = {
+    id: questionnaire.id,
     name: questionnaire.name,
     email: questionnaire.email,
     phone: questionnaire.phone,
@@ -54,7 +55,11 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
     priorityReason: questionnaire.priorityReason,
     investmentWillingness: questionnaire.investmentWillingness,
     strategyCallCommitment: questionnaire.strategyCallCommitment,
-    status: questionnaire.status
+    status: questionnaire.status,
+    ghlLink: questionnaire.ghlLink,
+    callBooked: questionnaire.callBooked,
+    appointmentDateTime: questionnaire.appointmentDateTime,
+    closerName: questionnaire.closerName
   }
 
   return <QuestionnaireCard data={data} />

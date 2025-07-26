@@ -13,6 +13,18 @@ export default function HomePage() {
         
         <div className="space-y-4">
           <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
+            <h2 className="text-xl font-semibold text-gradient-gold mb-4">Navigation</h2>
+            <div className="text-center space-y-3">
+              <Link 
+                href="/analytics" 
+                className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105"
+              >
+                📊 Analytics Dashboard
+              </Link>
+            </div>
+          </div>
+          
+          <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
             <h2 className="text-xl font-semibold text-gradient-gold mb-4">API Endpoints</h2>
             <div className="text-left space-y-2 text-sm">
               <div>
