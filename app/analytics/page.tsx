@@ -168,9 +168,7 @@ export default function AnalyticsPage() {
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage)
 
-  const handleRowClick = (id: string) => {
-    window.open(`/review/${id}`, '_blank')
-  }
+
 
   if (loading) {
     return (
@@ -376,7 +374,142 @@ export default function AnalyticsPage() {
               color: '#9ca3af'
             }}>No Shows</div>
           </div>
+          <div style={{ 
+            padding: '1.5rem',
+            background: 'rgba(30, 30, 32, 0.8)',
+            borderRadius: '1rem',
+            border: '1px solid rgba(218, 112, 214, 0.2)',
+            boxShadow: '0 0 20px rgba(218, 112, 214, 0.1)'
+          }}>
+            <div style={{
+              fontSize: '2rem',
+              fontWeight: 'bold',
+              color: '#f59e0b'
+            }}>
+              {questionnaires.filter(q => q.status === 'Disqualified').length}
+            </div>
+            <div style={{
+              color: '#9ca3af'
+            }}>Disqualified</div>
+          </div>
+          <div style={{ 
+            padding: '1.5rem',
+            background: 'rgba(30, 30, 32, 0.8)',
+            borderRadius: '1rem',
+            border: '1px solid rgba(218, 112, 214, 0.2)',
+            boxShadow: '0 0 20px rgba(218, 112, 214, 0.1)'
+          }}>
+            <div style={{
+              fontSize: '2rem',
+              fontWeight: 'bold',
+              color: '#8b5cf6'
+            }}>
+              {questionnaires.length > 0 ? ((questionnaires.filter(q => q.appointmentBooked).length / questionnaires.length) * 100).toFixed(1) : '0.0'}%
+            </div>
+            <div style={{
+              color: '#9ca3af'
+            }}>Conversion Rate</div>
+          </div>
+          <div style={{ 
+            padding: '1.5rem',
+            background: 'rgba(30, 30, 32, 0.8)',
+            borderRadius: '1rem',
+            border: '1px solid rgba(218, 112, 214, 0.2)',
+            boxShadow: '0 0 20px rgba(218, 112, 214, 0.1)'
+          }}>
+            <div style={{
+              fontSize: '2rem',
+              fontWeight: 'bold',
+              color: '#06b6d4'
+            }}>
+              {questionnaires.filter(q => q.appointmentBooked && q.appointmentTime && new Date(q.appointmentTime) > new Date()).length}
+            </div>
+            <div style={{
+              color: '#9ca3af'
+            }}>Upcoming Appointments</div>
+          </div>
         </div>
+
+        {/* Status Percentages Section */}
+        {questionnaires.filter(q => q.appointmentBooked).length > 0 && (
+          <div style={{
+            background: 'rgba(30, 30, 32, 0.8)',
+            borderRadius: '1rem',
+            border: '1px solid rgba(218, 112, 214, 0.2)',
+            boxShadow: '0 0 20px rgba(218, 112, 214, 0.1)',
+            padding: '1.5rem',
+            marginBottom: '2rem'
+          }}>
+            <h3 style={{
+              color: 'white',
+              fontSize: '1.25rem',
+              fontWeight: '600',
+              marginBottom: '1rem'
+            }}>
+              Status Breakdown (of Booked Appointments)
+            </h3>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '1rem'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '0.75rem',
+                background: 'rgba(34, 197, 94, 0.1)',
+                borderRadius: '0.5rem',
+                border: '1px solid rgba(34, 197, 94, 0.2)'
+              }}>
+                <span style={{ color: '#9ca3af' }}>Qualified Show-Ups:</span>
+                <span style={{ 
+                  color: '#4ade80', 
+                  fontWeight: '600',
+                  fontSize: '1.125rem'
+                }}>
+                  {((questionnaires.filter(q => q.status === 'Qualified Show-Up').length / questionnaires.filter(q => q.appointmentBooked).length) * 100).toFixed(1)}%
+                </span>
+              </div>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '0.75rem',
+                background: 'rgba(239, 68, 68, 0.1)',
+                borderRadius: '0.5rem',
+                border: '1px solid rgba(239, 68, 68, 0.2)'
+              }}>
+                <span style={{ color: '#9ca3af' }}>No Shows:</span>
+                <span style={{ 
+                  color: '#f87171', 
+                  fontWeight: '600',
+                  fontSize: '1.125rem'
+                }}>
+                  {((questionnaires.filter(q => q.status === 'No Show').length / questionnaires.filter(q => q.appointmentBooked).length) * 100).toFixed(1)}%
+                </span>
+              </div>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '0.75rem',
+                background: 'rgba(245, 158, 11, 0.1)',
+                borderRadius: '0.5rem',
+                border: '1px solid rgba(245, 158, 11, 0.2)'
+              }}>
+                <span style={{ color: '#9ca3af' }}>Disqualified:</span>
+                <span style={{ 
+                  color: '#fbbf24', 
+                  fontWeight: '600',
+                  fontSize: '1.125rem'
+                }}>
+                  {((questionnaires.filter(q => q.status === 'Disqualified').length / questionnaires.filter(q => q.appointmentBooked).length) * 100).toFixed(1)}%
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div style={{ 
           overflow: 'hidden',
@@ -562,13 +695,9 @@ export default function AnalyticsPage() {
                   <tr 
                     key={questionnaire.id}
                     style={{
-                      cursor: 'pointer',
                       transition: 'background-color 0.2s',
                       borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
                     }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                    onClick={() => handleRowClick(questionnaire.id)}
                   >
                     <td style={{
                       padding: '1rem 1.5rem',
@@ -581,11 +710,29 @@ export default function AnalyticsPage() {
                     <td style={{
                       padding: '1rem 1.5rem',
                       whiteSpace: 'nowrap',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: 'white'
+                      fontSize: '0.875rem'
                     }}>
-                      {questionnaire.name}
+                      <button
+                        onClick={() => window.open(`/review/${questionnaire.id}`, '_blank')}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          color: 'white',
+                          fontWeight: '500',
+                          cursor: 'pointer',
+                          textDecoration: 'underline',
+                          textDecorationColor: 'rgba(218, 112, 214, 0.5)',
+                          transition: 'all 0.2s'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.textDecorationColor = '#da70d6'
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.textDecorationColor = 'rgba(218, 112, 214, 0.5)'
+                        }}
+                      >
+                        {questionnaire.name}
+                      </button>
                     </td>
                     <td style={{
                       padding: '1rem 1.5rem',
@@ -594,30 +741,39 @@ export default function AnalyticsPage() {
                     }}>
                       {questionnaire.ghlLink ? (
                         <button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            window.open(questionnaire.ghlLink, '_blank')
-                          }}
+                          onClick={() => window.open(questionnaire.ghlLink, '_blank')}
                           style={{
                             display: 'inline-flex',
                             alignItems: 'center',
-                            padding: '0.25rem 0.75rem',
+                            gap: '0.25rem',
+                            padding: '0.5rem 1rem',
                             border: '1px solid #3b82f6',
                             fontSize: '0.75rem',
-                            fontWeight: '500',
+                            fontWeight: '600',
                             borderRadius: '0.5rem',
                             color: '#93c5fd',
                             background: 'rgba(59, 130, 246, 0.2)',
                             cursor: 'pointer',
-                            transition: 'all 0.2s'
+                            transition: 'all 0.2s',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.05em'
                           }}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.background = 'rgba(59, 130, 246, 0.3)'
+                            e.currentTarget.style.transform = 'translateY(-1px)'
+                            e.currentTarget.style.boxShadow = '0 4px 12px rgba(59, 130, 246, 0.3)'
                           }}
                           onMouseLeave={(e) => {
                             e.currentTarget.style.background = 'rgba(59, 130, 246, 0.2)'
+                            e.currentTarget.style.transform = 'translateY(0)'
+                            e.currentTarget.style.boxShadow = 'none'
                           }}
                         >
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15,3 21,3 21,9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                          </svg>
                           Open GHL
                         </button>
                       ) : (
