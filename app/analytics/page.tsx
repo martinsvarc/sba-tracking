@@ -46,11 +46,11 @@ export default function AnalyticsPage() {
     applyFilters()
   }, [questionnaires, filters, sortField, sortDirection])
 
-  // Refresh data every 30 seconds to catch updates
+  // Refresh data every 15 seconds to catch updates
   useEffect(() => {
     const interval = setInterval(() => {
       fetchQuestionnaires()
-    }, 30000) // 30 seconds
+    }, 15000) // 15 seconds
 
     return () => clearInterval(interval)
   }, [])
@@ -61,7 +61,14 @@ export default function AnalyticsPage() {
     }
     
     try {
-      const response = await fetch('/api/analytics')
+      // Add timestamp to prevent caching
+      const timestamp = new Date().getTime()
+      const response = await fetch(`/api/analytics?t=${timestamp}`, {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        }
+      })
       const data = await response.json()
       setQuestionnaires(data)
       setLastUpdated(new Date())

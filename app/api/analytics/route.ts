@@ -43,7 +43,16 @@ export async function GET() {
       }
     })
 
-    return NextResponse.json(questionnaires)
+    // Return response with cache-busting headers
+    return new NextResponse(JSON.stringify(questionnaires), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    })
 
   } catch (error) {
     console.error('Error fetching questionnaires:', error)
