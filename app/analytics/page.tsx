@@ -516,98 +516,188 @@ export default function AnalyticsPage() {
               </h3>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                gap: '1rem'
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: '0.75rem'
               }}>
                 <div style={{
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  padding: '0.75rem',
-                  background: 'rgba(34, 197, 94, 0.1)',
-                  borderRadius: '0.5rem',
-                  border: '1px solid rgba(34, 197, 94, 0.2)'
+                  padding: '0.875rem 1rem',
+                  background: 'rgba(34, 197, 94, 0.08)',
+                  borderRadius: '0.75rem',
+                  border: '1px solid rgba(34, 197, 94, 0.15)',
+                  minHeight: '3.5rem'
                 }}>
-                  <span style={{ color: '#9ca3af' }}>✅ Qualified Show-Ups:</span>
-                  <span style={{ 
-                    color: '#4ade80', 
-                    fontWeight: '600',
-                    fontSize: '1.125rem'
-                  }}>
-                    {((qualifiedShowUps / pastAppointments.length) * 100).toFixed(1)}% ({qualifiedShowUps} of {pastAppointments.length})
-                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ fontSize: '1.25rem' }}>✅</span>
+                    <span style={{ 
+                      color: '#e5e7eb', 
+                      fontWeight: '500',
+                      fontSize: '0.875rem'
+                    }}>Qualified Show-Ups</span>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ 
+                      color: '#4ade80', 
+                      fontWeight: '700',
+                      fontSize: '1rem',
+                      lineHeight: '1.2'
+                    }}>
+                      {((qualifiedShowUps / pastAppointments.length) * 100).toFixed(1)}%
+                    </div>
+                    <div style={{ 
+                      color: '#9ca3af', 
+                      fontSize: '0.75rem',
+                      lineHeight: '1.2'
+                    }}>
+                      {qualifiedShowUps} of {pastAppointments.length}
+                    </div>
+                  </div>
                 </div>
                 <div style={{
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  padding: '0.75rem',
-                  background: 'rgba(239, 68, 68, 0.1)',
-                  borderRadius: '0.5rem',
-                  border: '1px solid rgba(239, 68, 68, 0.2)'
+                  padding: '0.875rem 1rem',
+                  background: 'rgba(239, 68, 68, 0.08)',
+                  borderRadius: '0.75rem',
+                  border: '1px solid rgba(239, 68, 68, 0.15)',
+                  minHeight: '3.5rem'
                 }}>
-                  <span style={{ color: '#9ca3af' }}>❌ No Shows:</span>
-                  <span style={{ 
-                    color: '#f87171', 
-                    fontWeight: '600',
-                    fontSize: '1.125rem'
-                  }}>
-                    {((noShows / pastAppointments.length) * 100).toFixed(1)}% ({noShows} of {pastAppointments.length})
-                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ fontSize: '1.25rem' }}>❌</span>
+                    <span style={{ 
+                      color: '#e5e7eb', 
+                      fontWeight: '500',
+                      fontSize: '0.875rem'
+                    }}>No Shows</span>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ 
+                      color: '#f87171', 
+                      fontWeight: '700',
+                      fontSize: '1rem',
+                      lineHeight: '1.2'
+                    }}>
+                      {((noShows / pastAppointments.length) * 100).toFixed(1)}%
+                    </div>
+                    <div style={{ 
+                      color: '#9ca3af', 
+                      fontSize: '0.75rem',
+                      lineHeight: '1.2'
+                    }}>
+                      {noShows} of {pastAppointments.length}
+                    </div>
+                  </div>
                 </div>
                 <div style={{
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  padding: '0.75rem',
-                  background: 'rgba(245, 158, 11, 0.1)',
-                  borderRadius: '0.5rem',
-                  border: '1px solid rgba(245, 158, 11, 0.2)'
+                  padding: '0.875rem 1rem',
+                  background: 'rgba(245, 158, 11, 0.08)',
+                  borderRadius: '0.75rem',
+                  border: '1px solid rgba(245, 158, 11, 0.15)',
+                  minHeight: '3.5rem'
                 }}>
-                  <span style={{ color: '#9ca3af' }}>🟡 Disqualified:</span>
-                  <span style={{ 
-                    color: '#fbbf24', 
-                    fontWeight: '600',
-                    fontSize: '1.125rem'
-                  }}>
-                    {((disqualified / pastAppointments.length) * 100).toFixed(1)}% ({disqualified} of {pastAppointments.length})
-                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ fontSize: '1.25rem' }}>🟡</span>
+                    <span style={{ 
+                      color: '#e5e7eb', 
+                      fontWeight: '500',
+                      fontSize: '0.875rem'
+                    }}>Disqualified</span>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ 
+                      color: '#fbbf24', 
+                      fontWeight: '700',
+                      fontSize: '1rem',
+                      lineHeight: '1.2'
+                    }}>
+                      {((disqualified / pastAppointments.length) * 100).toFixed(1)}%
+                    </div>
+                    <div style={{ 
+                      color: '#9ca3af', 
+                      fontSize: '0.75rem',
+                      lineHeight: '1.2'
+                    }}>
+                      {disqualified} of {pastAppointments.length}
+                    </div>
+                  </div>
                 </div>
                 <div style={{
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  padding: '0.75rem',
-                  background: 'rgba(107, 114, 128, 0.1)',
-                  borderRadius: '0.5rem',
-                  border: '1px solid rgba(107, 114, 128, 0.2)'
+                  padding: '0.875rem 1rem',
+                  background: 'rgba(107, 114, 128, 0.08)',
+                  borderRadius: '0.75rem',
+                  border: '1px solid rgba(107, 114, 128, 0.15)',
+                  minHeight: '3.5rem'
                 }}>
-                  <span style={{ color: '#9ca3af' }}>⚫️ Untracked:</span>
-                  <span style={{ 
-                    color: '#9ca3af', 
-                    fontWeight: '600',
-                    fontSize: '1.125rem'
-                  }}>
-                    {((untracked / pastAppointments.length) * 100).toFixed(1)}% ({untracked} of {pastAppointments.length})
-                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ fontSize: '1.25rem' }}>⚫️</span>
+                    <span style={{ 
+                      color: '#e5e7eb', 
+                      fontWeight: '500',
+                      fontSize: '0.875rem'
+                    }}>Untracked</span>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ 
+                      color: '#9ca3af', 
+                      fontWeight: '700',
+                      fontSize: '1rem',
+                      lineHeight: '1.2'
+                    }}>
+                      {((untracked / pastAppointments.length) * 100).toFixed(1)}%
+                    </div>
+                    <div style={{ 
+                      color: '#9ca3af', 
+                      fontSize: '0.75rem',
+                      lineHeight: '1.2'
+                    }}>
+                      {untracked} of {pastAppointments.length}
+                    </div>
+                  </div>
                 </div>
                 <div style={{
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  padding: '0.75rem',
-                  background: 'rgba(34, 197, 94, 0.1)',
-                  borderRadius: '0.5rem',
-                  border: '1px solid rgba(34, 197, 94, 0.2)'
+                  padding: '0.875rem 1rem',
+                  background: 'rgba(34, 197, 94, 0.08)',
+                  borderRadius: '0.75rem',
+                  border: '1px solid rgba(34, 197, 94, 0.15)',
+                  minHeight: '3.5rem'
                 }}>
-                  <span style={{ color: '#9ca3af' }}>🟩 Closed:</span>
-                  <span style={{ 
-                    color: '#22c55e', 
-                    fontWeight: '600',
-                    fontSize: '1.125rem'
-                  }}>
-                    {((closed / pastAppointments.length) * 100).toFixed(1)}% ({closed} of {pastAppointments.length})
-                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ fontSize: '1.25rem' }}>🟩</span>
+                    <span style={{ 
+                      color: '#e5e7eb', 
+                      fontWeight: '500',
+                      fontSize: '0.875rem'
+                    }}>Closed</span>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ 
+                      color: '#22c55e', 
+                      fontWeight: '700',
+                      fontSize: '1rem',
+                      lineHeight: '1.2'
+                    }}>
+                      {((closed / pastAppointments.length) * 100).toFixed(1)}%
+                    </div>
+                    <div style={{ 
+                      color: '#9ca3af', 
+                      fontSize: '0.75rem',
+                      lineHeight: '1.2'
+                    }}>
+                      {closed} of {pastAppointments.length}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -844,7 +934,12 @@ export default function AnalyticsPage() {
                     }}>
                       {questionnaire.ghlLink ? (
                         <button
-                          onClick={() => window.open(questionnaire.ghlLink, '_blank')}
+                          onClick={() => {
+                            const url = questionnaire.ghlLink || ''
+                            // Ensure the URL is properly formatted
+                            const fullUrl = url.startsWith('http') ? url : `https://${url}`
+                            window.open(fullUrl, '_blank', 'noopener,noreferrer')
+                          }}
                           style={{
                             display: 'inline-flex',
                             alignItems: 'center',
