@@ -24,6 +24,8 @@ export default function AnalyticsPage() {
   const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([])
   const [filteredData, setFilteredData] = useState<Questionnaire[]>([])
   const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [sortField, setSortField] = useState<keyof Questionnaire>('createdAt')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
@@ -44,15 +46,30 @@ export default function AnalyticsPage() {
     applyFilters()
   }, [questionnaires, filters, sortField, sortDirection])
 
-  const fetchQuestionnaires = async () => {
+  // Refresh data every 30 seconds to catch updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchQuestionnaires()
+    }, 30000) // 30 seconds
+
+    return () => clearInterval(interval)
+  }, [])
+
+  const fetchQuestionnaires = async (isRefresh = false) => {
+    if (isRefresh) {
+      setRefreshing(true)
+    }
+    
     try {
       const response = await fetch('/api/analytics')
       const data = await response.json()
       setQuestionnaires(data)
+      setLastUpdated(new Date())
     } catch (error) {
       console.error('Error fetching questionnaires:', error)
     } finally {
       setLoading(false)
+      setRefreshing(false)
     }
   }
 
@@ -197,24 +214,84 @@ export default function AnalyticsPage() {
           margin: '0 auto',
           padding: '2rem 1rem'
         }}>
-          <h1 style={{
-            fontSize: '2.5rem',
-            fontWeight: 'bold',
-            margin: 0,
-            background: 'linear-gradient(135deg, #da70d6 0%, #9333ea 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start'
           }}>
-            Analytics Dashboard
-          </h1>
-          <p style={{
-            marginTop: '0.5rem',
-            color: '#9ca3af',
-            fontSize: '1.125rem'
-          }}>
-            Master overview of all submitted questionnaires
-          </p>
+            <div>
+              <h1 style={{
+                fontSize: '2.5rem',
+                fontWeight: 'bold',
+                margin: 0,
+                background: 'linear-gradient(135deg, #da70d6 0%, #9333ea 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}>
+                Analytics Dashboard
+              </h1>
+              <p style={{
+                marginTop: '0.5rem',
+                color: '#9ca3af',
+                fontSize: '1.125rem'
+              }}>
+                Master overview of all submitted questionnaires
+              </p>
+              {lastUpdated && (
+                <p style={{
+                  marginTop: '0.25rem',
+                  color: '#6b7280',
+                  fontSize: '0.875rem'
+                }}>
+                  Last updated: {lastUpdated.toLocaleTimeString()}
+                </p>
+              )}
+            </div>
+            <button
+              onClick={() => {
+                fetchQuestionnaires(true)
+              }}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.75rem 1.5rem',
+                border: '1px solid rgba(218, 112, 214, 0.3)',
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                borderRadius: '0.5rem',
+                color: '#da70d6',
+                background: 'rgba(218, 112, 214, 0.1)',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(218, 112, 214, 0.2)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(218, 112, 214, 0.1)'
+              }}
+            >
+              <svg 
+                width="16" 
+                height="16" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2"
+                style={{
+                  animation: refreshing ? 'spin 1s linear infinite' : 'none'
+                }}
+              >
+                <path d="M21 2v6h-6"></path>
+                <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+                <path d="M3 22v-6h6"></path>
+                <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+              </svg>
+              Refresh Data
+            </button>
+          </div>
         </div>
       </div>
 
